@@ -1,0 +1,127 @@
+{
+  "intents": [
+
+    {
+      "id": "greeting",
+      "keywords_pl": ["hej", "siema", "cześć", "dzień dobry", "witaj", "witam"],
+      "keywords_en": ["hi", "hello", "hey", "good morning", "good afternoon", "good evening"],
+      "response_pl": "Hej! Miło Cię tu widzieć. Czym mogę pomóc?",
+      "response_en": "Hey! Good to have you here. What can I help you with?",
+      "quick_replies_pl": [
+        { "label": "Co robicie?", "val": "what do you do" },
+        { "label": "Jak działa proces?", "val": "how does it work" },
+        { "label": "Kontakt", "val": "contact" }
+      ],
+      "quick_replies_en": [
+        { "label": "What do you do?", "val": "what do you do" },
+        { "label": "How does it work?", "val": "how does it work" },
+        { "label": "Contact", "val": "contact" }
+      ]
+    },
+
+    {
+      "id": "what_we_do",
+      "keywords_pl": ["co robicie", "czym się zajmujecie", "o czym", "kim jesteście", "co to jest sofuture", "czym jest sofuture", "opowiedz o sobie"],
+      "keywords_en": ["what do you do", "who are you", "what is sofuture", "tell me about", "explain", "what does sofuture do"],
+      "response_pl": "SoFuture buduje agentów AI i automatyzacje — zaprojektowane konkretnie pod Twoją firmę. Nie ma tu gotowych szablonów. Najpierw rozumiemy Twój biznes, szukamy co pochłania czas i pieniądze, potem proponujemy rozwiązania, które naprawdę pasują.",
+      "response_en": "SoFuture builds AI agents and automations — designed specifically around your business. No templates, no one-size-fits-all. We first understand your setup, find what's draining time and money, then build solutions that actually fit.",
+      "quick_replies_pl": [
+        { "label": "Jak działa proces?", "val": "how does it work" },
+        { "label": "Jakie usługi?", "val": "services" },
+        { "label": "Skontaktuj się", "val": "contact" }
+      ],
+      "quick_replies_en": [
+        { "label": "How does it work?", "val": "how does it work" },
+        { "label": "What services?", "val": "services" },
+        { "label": "Get in touch", "val": "contact" }
+      ]
+    },
+
+    {
+      "id": "how_it_works",
+      "keywords_pl": ["jak działa", "jak to działa", "jak wygląda", "jak zacząć", "jak rozpocząć", "co się dzieje", "etapy", "kroki", "proces", "wdrożenie", "ile trwa"],
+      "keywords_en": ["how does it work", "how it works", "how to start", "what happens", "steps", "process", "onboarding", "how long", "timeline"],
+      "response_pl": "Proces wygląda tak:\n\n① <strong>Discovery call</strong> — bezpłatna rozmowa, żeby zrozumieć Twój biznes i znaleźć wąskie gardła.\n\n② <strong>Propozycja</strong> — pokazujemy konkretne automatyzacje i szacowany czas zwrotu.\n\n③ <strong>Budowanie</strong> — tworzymy i testujemy rozwiązanie razem z Tobą.\n\n④ <strong>Launch & wsparcie</strong> — wdrożenie, szkolenie, iteracje.",
+      "response_en": "Here's how it works:\n\n① <strong>Discovery call</strong> — a free call to understand your business and find bottlenecks.\n\n② <strong>Proposal</strong> — we show specific automations and estimated ROI.\n\n③ <strong>Build</strong> — we build and test the solution together with you.\n\n④ <strong>Launch & support</strong> — go live, training, iterations.",
+      "quick_replies_pl": [
+        { "label": "Umów rozmowę", "val": "contact" },
+        { "label": "Jakie usługi?", "val": "services" },
+        { "label": "Ile to kosztuje?", "val": "pricing" }
+      ],
+      "quick_replies_en": [
+        { "label": "Book a call", "val": "contact" },
+        { "label": "What services?", "val": "services" },
+        { "label": "Pricing?", "val": "pricing" }
+      ]
+    },
+
+    {
+      "id": "contact",
+      "keywords_pl": ["kontakt", "skontaktować", "napisać", "zadzwonić", "email", "mail", "spotkanie", "umówić", "rozmowa", "konsultacja"],
+      "keywords_en": ["contact", "reach out", "email", "call", "meeting", "book", "schedule", "consultation", "talk", "get in touch"],
+      "response_pl": "Możesz napisać na <strong><a href='mailto:general@sofuture.ai'>general@sofuture.ai</a></strong> albo wypełnić formularz i wrócimy do Ciebie w ciągu 24h.\n\nNajszybciej — umów bezpłatną rozmowę discovery bezpośrednio w kalendarzu.",
+      "response_en": "You can email us at <strong><a href='mailto:general@sofuture.ai'>general@sofuture.ai</a></strong> or fill in the contact form and we'll get back to you within 24h.\n\nFastest — book a free discovery call directly in our calendar.",
+      "quick_replies_pl": [
+        { "label": "Wyślij email", "val": "mailto:general@sofuture.ai" },
+        { "label": "Jak działa proces?", "val": "how does it work" }
+      ],
+      "quick_replies_en": [
+        { "label": "Send email", "val": "mailto:general@sofuture.ai" },
+        { "label": "How does it work?", "val": "how does it work" }
+      ]
+    },
+
+    {
+      "id": "services",
+      "keywords_pl": ["usługi", "oferta", "co budujecie", "co tworzycie", "agent", "automatyzacja", "lista", "pełna lista"],
+      "keywords_en": ["services", "offer", "what do you build", "what you build", "agent", "automation", "list"],
+      "response_pl": "Budujemy wszystko — od własnych specjalistów AI po automatyzacje eliminujące powtarzalne zadania. Przewiń stronę w dół żeby zobaczyć pełną listę (15 obszarów).",
+      "response_en": "We build everything — from dedicated AI specialists to automations that eliminate repetitive tasks. Scroll down the page to see the full list (15 areas).",
+      "quick_replies_pl": [
+        { "label": "Jak działa proces?", "val": "how does it work" },
+        { "label": "Ile to kosztuje?", "val": "pricing" },
+        { "label": "Kontakt", "val": "contact" }
+      ],
+      "quick_replies_en": [
+        { "label": "How does it work?", "val": "how does it work" },
+        { "label": "Pricing?", "val": "pricing" },
+        { "label": "Contact", "val": "contact" }
+      ]
+    },
+
+    {
+      "id": "pricing",
+      "keywords_pl": ["cena", "ile kosztuje", "koszt", "wycena", "ile", "pricing", "pieniądze", "budżet"],
+      "keywords_en": ["price", "pricing", "cost", "how much", "budget", "quote", "rates"],
+      "response_pl": "Cena zależy od zakresu projektu — nie mamy jednej stawki dla wszystkich. Najpierw rozmawiamy o Twoim biznesie, żeby zaproponować konkretną wycenę dopasowaną do wartości, jaką przyniesie automatyzacja.",
+      "response_en": "Pricing depends on the project scope — we don't have a one-size rate. We first talk about your business to propose a specific quote matched to the value the automation will bring.",
+      "quick_replies_pl": [
+        { "label": "Umów rozmowę", "val": "contact" },
+        { "label": "Jak działa proces?", "val": "how does it work" }
+      ],
+      "quick_replies_en": [
+        { "label": "Book a call", "val": "contact" },
+        { "label": "How does it work?", "val": "how does it work" }
+      ]
+    },
+
+    {
+      "id": "fallback",
+      "keywords_pl": [],
+      "keywords_en": [],
+      "response_pl": "Hmm, nie jestem pewien czy dobrze rozumiem. Mogę pomóc z informacjami o SoFuture, naszych usługach, procesie współpracy lub kontaktem.",
+      "response_en": "Hmm, I'm not sure I follow. I can help with info about SoFuture, our services, how we work, or getting in touch.",
+      "quick_replies_pl": [
+        { "label": "Co robicie?", "val": "what do you do" },
+        { "label": "Jak działa proces?", "val": "how does it work" },
+        { "label": "Kontakt", "val": "contact" }
+      ],
+      "quick_replies_en": [
+        { "label": "What do you do?", "val": "what do you do" },
+        { "label": "How does it work?", "val": "how does it work" },
+        { "label": "Contact", "val": "contact" }
+      ]
+    }
+
+  ]
+}
