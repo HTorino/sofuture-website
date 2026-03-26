@@ -213,6 +213,17 @@
       align-self: flex-end;
     }
 
+    /* typing indicator */
+    .typing-indicator { display: flex; gap: 5px; align-items: center; padding: 11px 14px; }
+    .typing-indicator span {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--muted); display: block;
+      animation: blink 1.2s infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: .2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: .4s; }
+    @keyframes blink { 0%,80%,100% { opacity:.2; } 40% { opacity:1; } }
+
     .quick-replies {
       display: flex;
       flex-wrap: wrap;
@@ -849,95 +860,72 @@ async function botSay(html, qrs = [], d = 380) {
   addMsg(html, 'bot', qrs);
 }
 
-/* ── Knowledge base ── */
-let KB    = null;
-let uLang = 'en'; /* user language — sticky across quick-reply clicks */
+/* ══════════════════════════════════════════
+   GPT via Make.com webhook
+══════════════════════════════════════════ */
+const WEBHOOK = 'https://hook.eu1.make.com/g2bbsko9n93u83ae8t8liytxzcs7owyt';
+let history = []; /* conversation history sent to OpenAI */
+let busy    = false;
 
-async function loadKB() {
-  try {
-    const r = await fetch('./answers.json');
-    KB = (await r.json()).intents || [];
-  } catch(e) { KB = []; }
+/* Typing indicator */
+function showTyping() {
+  const el = document.createElement('div');
+  el.className = 'bubble bot typing-indicator';
+  el.id = 'typing';
+  el.innerHTML = '<span></span><span></span><span></span>';
+  msgsEl.appendChild(el);
+  msgsEl.scrollTop = msgsEl.scrollHeight;
+}
+function hideTyping() {
+  const el = document.getElementById('typing');
+  if (el) el.remove();
 }
 
-/* Detect Polish without \b — JS \b doesn't understand non-ASCII chars.
-   We check for Polish diacritics OR common unambiguous Polish words. */
-function detectLang(t) {
-  return /[ąęóśłźżćń]|czym|jakie|jaki|jak |czy |ile |gdzie |kiedy |usług|ofert|kontakt|cena|koszt|spotkanie|proces|etapy|macie|robicie|zajmujecie|budujecie|tworzycie|agenci|cennik|chciałbym|chciałabym/i.test(t)
-    ? 'pl' : 'en';
-}
-
-function findIntent(lo, lang) {
-  if (!KB || !KB.length) return null;
-  /* Try preferred language first, then the other one — so Polish queries
-     work even if lang detection was uncertain */
-  const orders = lang === 'pl'
-    ? ['keywords_pl','keywords_en']
-    : ['keywords_en','keywords_pl'];
-  for (const key of orders) {
-    for (const intent of KB) {
-      if (intent.id === 'fallback') continue;
-      for (const kw of (intent[key] || [])) {
-        if (lo.includes(kw.toLowerCase())) return intent;
-      }
-    }
-  }
-  return KB.find(i => i.id === 'fallback') || null;
-}
-
-function buildReply(intent, lang) {
-  const pl = lang === 'pl';
-  return {
-    t: pl ? intent.response_pl : intent.response_en,
-    q: pl ? (intent.quick_replies_pl || []) : (intent.quick_replies_en || [])
-  };
-}
-
-function getReply(m, lang) {
-  const pl = lang === 'pl';
-  const lo = m.toLowerCase().trim();
-
-  /* ── #id direct routing (quick-reply buttons & manual typing) ── */
-  if (lo.startsWith('#') && KB) {
-    const id     = lo.slice(1);
-    const intent = KB.find(i => i.id === id);
-    if (intent) return buildReply(intent, lang);
-  }
-
-  /* ── Keyword search ── */
-  const match = findIntent(lo, lang);
-  if (match) return buildReply(match, lang);
-
-  /* ── Static fallback (KB not loaded yet) ── */
-  return pl
-    ? { t:'Hmm, mogę Ci powiedzieć więcej o SoFuture, usługach lub procesie współpracy.',
-        q:[{label:'Co robicie?',val:'#what_we_do'},{label:'Jakie usługi?',val:'#services'},{label:'Kontakt',val:'#contact'}] }
-    : { t:"Not sure I caught that. I can tell you about SoFuture, our services, or how we work.",
-        q:[{label:'What do you do?',val:'#what_we_do'},{label:'Services',val:'#services'},{label:'Contact',val:'#contact'}] };
-}
-
-async function handleMsg(text, displayLabel) {
+async function handleMsg(text) {
   const t = text.trim();
-  if (!t) return;
+  if (!t || busy) return;
 
-  inputEl.value = ''; /* always clear — regardless of message type */
+  inputEl.value = '';
+  busy = true;
 
-  if (t.startsWith('mailto:')) { window.location.href = t; return; }
+  /* mailto: links */
+  if (t.startsWith('mailto:')) { window.location.href = t; busy = false; return; }
 
-  if (t.startsWith('#')) {
-    /* quick-reply or manual #id — show label bubble, keep existing language */
-    if (displayLabel) addMsg(displayLabel, 'user');
-  } else {
-    /* typed text — update language, show user bubble */
-    uLang = detectLang(t);
-    addMsg(t, 'user');
+  /* show user bubble */
+  openChat();
+  addMsg(t, 'user');
+
+  /* add to history */
+  history.push({ role: 'user', content: t });
+
+  /* typing indicator */
+  showTyping();
+  sendEl.disabled  = true;
+  inputEl.disabled = true;
+
+  try {
+    const res  = await fetch(WEBHOOK, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ message: t, history: history.slice(-10) })
+    });
+    const data = await res.json();
+    const reply = data.reply || 'Przepraszam, coś poszło nie tak. Napisz na general@sofuture.ai';
+
+    hideTyping();
+    addMsg(reply, 'bot');
+    history.push({ role: 'assistant', content: reply });
+
+  } catch(e) {
+    hideTyping();
+    addMsg('Chwilowy problem z połączeniem. Napisz do nas na <a href="mailto:general@sofuture.ai" style="color:var(--blue)">general@sofuture.ai</a>', 'bot');
   }
 
-  const rep = getReply(t, uLang);
-  await botSay(rep.t, rep.q || []);
+  sendEl.disabled  = false;
+  inputEl.disabled = false;
+  inputEl.focus();
+  busy = false;
 }
-
-loadKB();
 
 sendEl.addEventListener('click', () => handleMsg(inputEl.value));
 inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') handleMsg(inputEl.value); });
