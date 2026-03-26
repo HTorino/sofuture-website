@@ -1860,12 +1860,12 @@
         "get in contact",
         "how do i apply"
       ],
-      "response_pl": "Możesz napisać bezpośrednio na <strong><a href='mailto:general@sofuture.ai'>general@sofuture.ai</a></strong> — odpowiadamy w ciągu 24h.\n\nNajszybciej: umów bezpłatną rozmowę discovery od razu w kalendarzu.",
-      "response_en": "You can email us directly at <strong><a href='mailto:general@sofuture.ai'>general@sofuture.ai</a></strong> — we reply within 24h.\n\nFastest: book a free discovery call directly in our calendar.",
+      "response_pl": "Możesz napisać bezpośrednio na <strong><a href='mailto:general@sofuture.pl'>general@sofuture.pl</a></strong> — odpowiadamy w ciągu 24h.\n\nNajszybciej: umów bezpłatną rozmowę discovery od razu w kalendarzu.",
+      "response_en": "You can email us directly at <strong><a href='mailto:general@sofuture.pl'>general@sofuture.pl</a></strong> — we reply within 24h.\n\nFastest: book a free discovery call directly in our calendar.",
       "quick_replies_pl": [
         {
           "label": "✉ Wyślij email",
-          "val": "mailto:general@sofuture.ai"
+          "val": "mailto:general@sofuture.pl"
         },
         {
           "label": "Jak działa proces?",
@@ -1875,7 +1875,7 @@
       "quick_replies_en": [
         {
           "label": "✉ Send email",
-          "val": "mailto:general@sofuture.ai"
+          "val": "mailto:general@sofuture.pl"
         },
         {
           "label": "How does it work?",
