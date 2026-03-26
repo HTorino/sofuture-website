@@ -833,7 +833,7 @@ function addMsg(html, who, qrs = []) {
       const btn = document.createElement('button');
       btn.className = 'qr-btn';
       btn.textContent = q.label;
-      btn.onclick = () => handleMsg(q.val || q.label);
+      btn.onclick = () => handleMsg(q.val || q.label, q.label);
       wrap.appendChild(btn);
     });
     b.appendChild(wrap);
@@ -849,68 +849,91 @@ async function botSay(html, qrs = [], d = 380) {
   addMsg(html, 'bot', qrs);
 }
 
-/* ── Knowledge base loaded from answers.json ── */
-let KB = null;
+/* ── Knowledge base ── */
+let KB    = null;
+let uLang = 'en'; /* user language — sticky across quick-reply clicks */
 
 async function loadKB() {
   try {
-    const res = await fetch('./answers.json');
-    const data = await res.json();
-    KB = data.intents;
-  } catch(e) {
-    KB = [];
-  }
+    const r = await fetch('./answers.json');
+    KB = (await r.json()).intents || [];
+  } catch(e) { KB = []; }
 }
 
+/* Detect Polish without \b — JS \b doesn't understand non-ASCII chars.
+   We check for Polish diacritics OR common unambiguous Polish words. */
 function detectLang(t) {
-  return /\b(cześć|hej|siema|co|jak|czy|jest|firma|chcę|mogę|kontakt|usług|ile|cena|macie|robicie|zajmujecie|czym|który|które|kiedy|gdzie)\b/i.test(t) ? 'pl' : 'en';
+  return /[ąęóśłźżćń]|czym|jakie|jaki|jak |czy |ile |gdzie |kiedy |usług|ofert|kontakt|cena|koszt|spotkanie|proces|etapy|macie|robicie|zajmujecie|budujecie|tworzycie|agenci|cennik|chciałbym|chciałabym/i.test(t)
+    ? 'pl' : 'en';
+}
+
+function findIntent(lo, lang) {
+  if (!KB || !KB.length) return null;
+  /* Try preferred language first, then the other one — so Polish queries
+     work even if lang detection was uncertain */
+  const orders = lang === 'pl'
+    ? ['keywords_pl','keywords_en']
+    : ['keywords_en','keywords_pl'];
+  for (const key of orders) {
+    for (const intent of KB) {
+      if (intent.id === 'fallback') continue;
+      for (const kw of (intent[key] || [])) {
+        if (lo.includes(kw.toLowerCase())) return intent;
+      }
+    }
+  }
+  return KB.find(i => i.id === 'fallback') || null;
+}
+
+function buildReply(intent, lang) {
+  const pl = lang === 'pl';
+  return {
+    t: pl ? intent.response_pl : intent.response_en,
+    q: pl ? (intent.quick_replies_pl || []) : (intent.quick_replies_en || [])
+  };
 }
 
 function getReply(m, lang) {
-  const pl   = lang === 'pl';
-  const lo   = m.toLowerCase();
-  const kws  = pl ? 'keywords_pl' : 'keywords_en';
+  const pl = lang === 'pl';
+  const lo = m.toLowerCase().trim();
 
-  /* search loaded knowledge base */
-  if (KB && KB.length) {
-    let best = null;
-    for (const intent of KB) {
-      if (intent.id === 'fallback') continue;
-      const keywords = intent[kws] || [];
-      for (const kw of keywords) {
-        if (lo.includes(kw.toLowerCase())) {
-          best = intent;
-          break;
-        }
-      }
-      if (best) break;
-    }
-    const match = best || KB.find(i => i.id === 'fallback');
-    if (match) {
-      return {
-        t: pl ? match.response_pl : match.response_en,
-        q: pl ? (match.quick_replies_pl || []) : (match.quick_replies_en || [])
-      };
-    }
+  /* ── #id direct routing (quick-reply buttons & manual typing) ── */
+  if (lo.startsWith('#') && KB) {
+    const id     = lo.slice(1);
+    const intent = KB.find(i => i.id === id);
+    if (intent) return buildReply(intent, lang);
   }
 
-  /* static fallback if KB not loaded */
+  /* ── Keyword search ── */
+  const match = findIntent(lo, lang);
+  if (match) return buildReply(match, lang);
+
+  /* ── Static fallback (KB not loaded yet) ── */
   return pl
-    ? { t:'Hmm, mogę Ci powiedzieć więcej o SoFuture, naszych usługach lub procesie współpracy.',
-        q:[{label:'Co robicie?',val:'what do you do'},{label:'Jak działa proces?',val:'how does it work'},{label:'Kontakt',val:'contact'}] }
+    ? { t:'Hmm, mogę Ci powiedzieć więcej o SoFuture, usługach lub procesie współpracy.',
+        q:[{label:'Co robicie?',val:'#what_we_do'},{label:'Jakie usługi?',val:'#services'},{label:'Kontakt',val:'#contact'}] }
     : { t:"Not sure I caught that. I can tell you about SoFuture, our services, or how we work.",
-        q:[{label:'What do you do?',val:'what do you do'},{label:'How does it work?',val:'how does it work'},{label:'Contact',val:'contact'}] };
+        q:[{label:'What do you do?',val:'#what_we_do'},{label:'Services',val:'#services'},{label:'Contact',val:'#contact'}] };
 }
 
-async function handleMsg(text) {
+async function handleMsg(text, displayLabel) {
   const t = text.trim();
   if (!t) return;
-  /* handle mailto: quick replies */
+
+  inputEl.value = ''; /* always clear — regardless of message type */
+
   if (t.startsWith('mailto:')) { window.location.href = t; return; }
-  addMsg(t, 'user');
-  inputEl.value = '';
-  const lang = detectLang(t);
-  const rep  = getReply(t, lang);
+
+  if (t.startsWith('#')) {
+    /* quick-reply or manual #id — show label bubble, keep existing language */
+    if (displayLabel) addMsg(displayLabel, 'user');
+  } else {
+    /* typed text — update language, show user bubble */
+    uLang = detectLang(t);
+    addMsg(t, 'user');
+  }
+
+  const rep = getReply(t, uLang);
   await botSay(rep.t, rep.q || []);
 }
 
