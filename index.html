@@ -525,8 +525,8 @@
 <footer>
   <div class="ft-brand">soFuture</div>
   <div class="ft-info">
-    <a href="mailto:general@sofuture.ai">general@sofuture.pl</a><br>
-    sofuture.pl
+    <a href="mailto:general@sofuture.ai">general@sofuture.ai</a><br>
+    sofuture.ai
   </div>
 </footer>
 
@@ -869,18 +869,24 @@ function detectLang(t) {
 
 function findIntent(lo, lang) {
   if (!KB || !KB.length) return null;
-  /* Try preferred language first, then the other one — so Polish queries
-     work even if lang detection was uncertain */
+  /* Scoring-based matching: each matched keyword contributes its character
+     length to the intent's score. Longer keywords are more specific, so
+     a high-scoring intent beats the first keyword hit.
+     Try preferred language first, then fallback to the other. */
   const orders = lang === 'pl'
     ? ['keywords_pl','keywords_en']
     : ['keywords_en','keywords_pl'];
   for (const key of orders) {
+    let best = null, bestScore = 0;
     for (const intent of KB) {
       if (intent.id === 'fallback') continue;
+      let score = 0;
       for (const kw of (intent[key] || [])) {
-        if (lo.includes(kw.toLowerCase())) return intent;
+        if (lo.includes(kw.toLowerCase())) score += kw.length;
       }
+      if (score > bestScore) { bestScore = score; best = intent; }
     }
+    if (best) return best;
   }
   return KB.find(i => i.id === 'fallback') || null;
 }
