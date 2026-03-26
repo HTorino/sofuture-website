@@ -849,111 +849,72 @@ async function botSay(html, qrs = [], d = 380) {
   addMsg(html, 'bot', qrs);
 }
 
+/* ── Knowledge base loaded from answers.json ── */
+let KB = null;
+
+async function loadKB() {
+  try {
+    const res = await fetch('./answers.json');
+    const data = await res.json();
+    KB = data.intents;
+  } catch(e) {
+    KB = [];
+  }
+}
+
 function detectLang(t) {
-  return /\b(cześć|hej|siema|co|jak|czy|jest|firma|chcę|mogę|kontakt|usług|ile|cena|macie|robicie|zajmujecie)\b/i.test(t) ? 'pl' : 'en';
+  return /\b(cześć|hej|siema|co|jak|czy|jest|firma|chcę|mogę|kontakt|usług|ile|cena|macie|robicie|zajmujecie|czym|który|które|kiedy|gdzie)\b/i.test(t) ? 'pl' : 'en';
 }
 
 function getReply(m, lang) {
-  const pl = lang === 'pl';
-  const lo = m.toLowerCase();
+  const pl   = lang === 'pl';
+  const lo   = m.toLowerCase();
+  const kws  = pl ? 'keywords_pl' : 'keywords_en';
 
-  if (/\b(hello|hi|hey|good\s(morning|afternoon|evening))\b/.test(lo)
-   || /\b(cześć|hej|siema|dzień dobry|witaj)\b/.test(lo))
-    return pl
-      ? { t:'Hej! Miło Cię tu widzieć. Czym mogę pomóc?',
-          q:[{label:'Co robicie?',val:'what do you do'},{label:'Usługi',val:'services'},{label:'Kontakt',val:'contact'}] }
-      : { t:"Hey! Good to have you here. What can I help you with?",
-          q:[{label:'What do you do?',val:'what do you do'},{label:'Services',val:'services'},{label:'Contact',val:'contact'}] };
-
-  if (/what.*(do|does|you|company|sofuture)|who are you|tell me about|explain/.test(lo)
-   || /co (robicie|robi|to jest)|czym się zajmujecie|o czym/.test(lo))
-    return pl
-      ? { t:'SoFuture buduje agentów AI i automatyzacje — zaprojektowane konkretnie pod Twoją firmę. Nie ma tu gotowych szablonów. Najpierw rozumiemy Twój biznes, szukamy co pożera czas i pieniądze, potem proponujemy rozwiązania które naprawdę pasują.',
-          q:[{label:'Jakie usługi?',val:'services'},{label:'Jak to działa?',val:'how does it work'},{label:'Skontaktuj się',val:'contact'}] }
-      : { t:"SoFuture builds AI agents and automations — designed specifically around your business. No templates, no one-size-fits-all. We first understand your setup, find what's draining time and money, then build solutions that actually fit.",
-          q:[{label:'What services?',val:'services'},{label:'How it works',val:'how does it work'},{label:'Get in touch',val:'contact'}] };
-
-  if (/service|offer|build|create|agent|automat/.test(lo)
-   || /usług|ofert|budujecie|tworzycie|agent|automat/.test(lo))
-    return pl
-      ? { t:'Budujemy wszystko — od własnych specjalistów AI po automatyzacje eliminujące powtarzalne zadania. Przewiń stronę w dół żeby zobaczyć pełną listę.',
-          q:[{label:'Agenci AI',val:'ai agents'},{label:'Automatyzacje',val:'automation'},{label:'Ile to kosztuje?',val:'pricing'}] }
-      : { t:"We build everything — from custom AI specialists to automations that wipe out repetitive work. Scroll down to see the full list.",
-          q:[{label:'AI Agents',val:'ai agents'},{label:'Automation',val:'automation'},{label:'Pricing',val:'pricing'}] };
-
-  if (/ai agent|specialist agent|custom agent|local llm|local ai/.test(lo)
-   || /agent ai|specjalista ai|lokalny/.test(lo))
-    return pl
-      ? { t:'Tworzymy agentów AI działających lokalnie na Twoim serwerze — własny prawnik RODO, asystent sprzedaży, obsługa klienta. Zawsze dostępni, wytrenowani na Twoich danych.',
-          q:[{label:'Jak zamówić?',val:'how to start'},{label:'Kontakt',val:'contact'}] }
-      : { t:"We build AI agents that run locally on your server — GDPR specialist, sales assistant, customer support agent. Always on, trained on your data, never sharing it.",
-          q:[{label:'How to get started?',val:'how to start'},{label:'Contact us',val:'contact'}] };
-
-  if (/^automation$/.test(lo) || /^automatyzacje$/.test(lo))
-    return pl
-      ? { t:'Automatyzujemy zarówno z AI jak i bez — od prostych połączeń między narzędziami po złożone wieloetapowe procesy. Pracujemy na Make i n8n.',
-          q:[{label:'Jak zamówić?',val:'how to start'}] }
-      : { t:"We automate with and without AI — from simple tool connections to complex multi-step workflows. We work with Make and n8n.",
-          q:[{label:'How to get started?',val:'how to start'}] };
-
-  if (/price|pricing|cost|how much|fee|pay/.test(lo)
-   || /cena|koszt|ile|cennik|płatność/.test(lo))
-    return pl
-      ? { t:'Nie mamy gotowego cennika — wszystko wyceniamy indywidualnie po tym jak poznamy Twój setup. Najlepiej pogadajmy.',
-          q:[{label:'Skontaktuj się',val:'contact'}] }
-      : { t:"No fixed pricing — everything is scoped individually after we understand your setup. Best to just talk.",
-          q:[{label:'Get in touch',val:'contact'}] };
-
-  if (/how.*(work|process|start|begin|approach)|what.*(process|happen)/.test(lo)
-   || /jak to działa|jak zacząć|proces|podejście/.test(lo))
-    return pl
-      ? { t:'Zaczynamy od wywiadu wewnątrz Twojej firmy — szukamy pożeraczy czasu i procesów które można zoptymalizować. Potem proponujemy konkretne rozwiązania pod Twój setup.',
-          q:[{label:'Brzmi dobrze — kontakt',val:'contact'}] }
-      : { t:"We start by auditing your business — finding time drains and processes worth fixing. Then we propose solutions built for your exact setup.",
-          q:[{label:"Sounds good, let's talk",val:'contact'}] };
-
-  if (/contact|reach|email|whatsapp|telegram|talk|meet|call/.test(lo)
-   || /kontakt|email|napisz|zadzwoń|telegram|whatsapp|spotkanie/.test(lo))
-    return pl
-      ? { t:'Jasne. Jak wolisz się z nami skontaktować?',
-          q:[{label:'✉ Email',val:'email'},{label:'💬 WhatsApp',val:'whatsapp'},{label:'✈ Telegram',val:'telegram'}] }
-      : { t:'Sure. How would you like to reach us?',
-          q:[{label:'✉ Email',val:'email'},{label:'💬 WhatsApp',val:'whatsapp'},{label:'✈ Telegram',val:'telegram'}] };
-
-  if (/^email$/.test(lo))
-    return { t:'<a href="mailto:general@sofuture.ai" style="color:var(--blue)">general@sofuture.ai</a> — we usually reply within a few hours.' };
-
-  if (/^whatsapp$/.test(lo) || /^telegram$/.test(lo)) {
-    const app = lo.charAt(0).toUpperCase() + lo.slice(1);
-    return pl
-      ? { t:`${app} będzie dostępny wkrótce. Na razie: <a href="mailto:general@sofuture.ai" style="color:var(--blue)">general@sofuture.ai</a>` }
-      : { t:`${app} coming soon. For now: <a href="mailto:general@sofuture.ai" style="color:var(--blue)">general@sofuture.ai</a>` };
+  /* search loaded knowledge base */
+  if (KB && KB.length) {
+    let best = null;
+    for (const intent of KB) {
+      if (intent.id === 'fallback') continue;
+      const keywords = intent[kws] || [];
+      for (const kw of keywords) {
+        if (lo.includes(kw.toLowerCase())) {
+          best = intent;
+          break;
+        }
+      }
+      if (best) break;
+    }
+    const match = best || KB.find(i => i.id === 'fallback');
+    if (match) {
+      return {
+        t: pl ? match.response_pl : match.response_en,
+        q: pl ? (match.quick_replies_pl || []) : (match.quick_replies_en || [])
+      };
+    }
   }
 
-  if (/how to start|get started|begin|start working/.test(lo)
-   || /jak zamówić|jak zacząć|chcę współpracować/.test(lo))
-    return pl
-      ? { t:'Najprościej — napisz do nas i powiedz w skrócie czym zajmuje się Twoja firma. Resztą się zajmiemy.',
-          q:[{label:'✉ Email',val:'email'}] }
-      : { t:"Easiest way — just reach out and tell us briefly what your company does. We'll take it from there.",
-          q:[{label:'✉ Email',val:'email'}] };
-
+  /* static fallback if KB not loaded */
   return pl
-    ? { t:'Hmm, mogę Ci powiedzieć więcej o naszych usługach, jak działamy, albo pomóc Ci się z nami skontaktować.',
-        q:[{label:'Usługi',val:'services'},{label:'Jak działacie?',val:'how does it work'},{label:'Kontakt',val:'contact'}] }
-    : { t:"Not sure I caught that — happy to help though. Want to know what we do, how we work, or just get in touch?",
-        q:[{label:'What you do',val:'what do you do'},{label:'How it works',val:'how does it work'},{label:'Contact',val:'contact'}] };
+    ? { t:'Hmm, mogę Ci powiedzieć więcej o SoFuture, naszych usługach lub procesie współpracy.',
+        q:[{label:'Co robicie?',val:'what do you do'},{label:'Jak działa proces?',val:'how does it work'},{label:'Kontakt',val:'contact'}] }
+    : { t:"Not sure I caught that. I can tell you about SoFuture, our services, or how we work.",
+        q:[{label:'What do you do?',val:'what do you do'},{label:'How does it work?',val:'how does it work'},{label:'Contact',val:'contact'}] };
 }
 
 async function handleMsg(text) {
   const t = text.trim();
   if (!t) return;
+  /* handle mailto: quick replies */
+  if (t.startsWith('mailto:')) { window.location.href = t; return; }
   addMsg(t, 'user');
   inputEl.value = '';
   const lang = detectLang(t);
   const rep  = getReply(t, lang);
   await botSay(rep.t, rep.q || []);
 }
+
+loadKB();
 
 sendEl.addEventListener('click', () => handleMsg(inputEl.value));
 inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') handleMsg(inputEl.value); });
