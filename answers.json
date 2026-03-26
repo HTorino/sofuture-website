@@ -1,400 +1,2157 @@
 {
-  "_comment": "Quick replies use #intent_id format so language is preserved from context, not re-detected from English text.",
+  "_comment": "SoFuture chatbot knowledge base. Quick replies use #intent_id to preserve language context.",
   "intents": [
-
     {
       "id": "greeting",
-      "keywords_pl": ["hej", "siema", "cześć", "dzień dobry", "witaj", "witam", "dobry wieczór", "dobry ranek", "hejka"],
-      "keywords_en": ["hi", "hello", "hey", "good morning", "good afternoon", "good evening", "greetings"],
-      "response_pl": "Hej! Miło Cię tu widzieć. Czym mogę pomóc?",
-      "response_en": "Hey! Good to have you here. What can I help you with?",
+      "keywords_pl": [
+        "hej",
+        "siema",
+        "cześć",
+        "dzień dobry",
+        "witaj",
+        "witam",
+        "dobry wieczór",
+        "dobry ranek",
+        "hejka",
+        "siemanko",
+        "hejeczko"
+      ],
+      "keywords_en": [
+        "hi",
+        "hello",
+        "hey",
+        "good morning",
+        "good afternoon",
+        "good evening",
+        "greetings",
+        "howdy"
+      ],
+      "response_pl": "Hej! Miło Cię tu widzieć 👋 Jestem asystentem SoFuture — mogę opowiedzieć o tym co budujemy, jak działamy i jak możemy pomóc Twojej firmie.\n\nO co chcesz zapytać?",
+      "response_en": "Hey! Good to have you here 👋 I'm SoFuture's assistant — I can tell you about what we build, how we work, and how we can help your business.\n\nWhat would you like to know?",
       "quick_replies_pl": [
-        { "label": "Co robicie?", "val": "#what_we_do" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Kontakt", "val": "#contact" }
+        {
+          "label": "Co robicie?",
+          "val": "#what_we_do"
+        },
+        {
+          "label": "Jakie usługi?",
+          "val": "#services"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        }
       ],
       "quick_replies_en": [
-        { "label": "What do you do?", "val": "#what_we_do" },
-        { "label": "How does it work?", "val": "#how_it_works" },
-        { "label": "Contact", "val": "#contact" }
+        {
+          "label": "What do you do?",
+          "val": "#what_we_do"
+        },
+        {
+          "label": "What services?",
+          "val": "#services"
+        },
+        {
+          "label": "How does it work?",
+          "val": "#how_it_works"
+        }
       ]
     },
-
     {
       "id": "what_we_do",
-      "keywords_pl": ["co robicie", "czym się zajmujecie", "czym zajmuje", "o czym", "kim jesteście", "co to jest sofuture", "czym jest sofuture", "opowiedz o sobie", "opowiedz o firmie", "co oferujecie", "jaka firma", "co to sofuture", "czym jesteście", "w czym pomagacie", "do czego służy", "jaki macie cel", "misja", "wizja", "o was", "o firmie"],
-      "keywords_en": ["what do you do", "who are you", "what is sofuture", "tell me about", "explain", "what does sofuture do", "about you", "about sofuture", "company", "your mission", "what you offer"],
-      "response_pl": "SoFuture buduje agentów AI i automatyzacje — zaprojektowane konkretnie pod Twoją firmę. Nie ma tu gotowych szablonów.\n\nNajpierw rozumiemy Twój biznes, szukamy co pochłania czas i pieniądze, potem projektujemy rozwiązania które naprawdę pasują — i wdrażamy je razem z Tobą.",
-      "response_en": "SoFuture builds AI agents and automations — designed specifically around your business. No templates, no one-size-fits-all.\n\nWe first understand your setup, find what's draining time and money, then build solutions that actually fit — and deploy them with you.",
+      "keywords_pl": [
+        "co robicie",
+        "czym się zajmujecie",
+        "czym zajmuje",
+        "o czym",
+        "kim jesteście",
+        "co to jest sofuture",
+        "czym jest sofuture",
+        "opowiedz o sobie",
+        "opowiedz o firmie",
+        "co oferujecie",
+        "jaka firma",
+        "co to sofuture",
+        "czym jesteście",
+        "w czym pomagacie",
+        "misja",
+        "wizja",
+        "o was",
+        "o firmie",
+        "kto to sofuture",
+        "co robi sofuture",
+        "czym możesz pomóc",
+        "czym możecie pomóc",
+        "jaki jest profil",
+        "co jest waszą specjalnością"
+      ],
+      "keywords_en": [
+        "what do you do",
+        "who are you",
+        "what is sofuture",
+        "tell me about",
+        "about you",
+        "about sofuture",
+        "company",
+        "your mission",
+        "what you offer",
+        "who is sofuture",
+        "what are you about",
+        "what exactly do you do"
+      ],
+      "response_pl": "SoFuture buduje agentów AI i automatyzacje — zaprojektowane konkretnie pod Twoją firmę. Żadnych gotowych szablonów, żadnego \"one size fits all\".\n\nNajpierw rozumiemy Twój biznes i szukamy co pochłania czas i pieniądze — a potem projektujemy i wdrażamy rozwiązania które naprawdę pasują.",
+      "response_en": "SoFuture builds AI agents and automations — designed specifically around your business. No templates, no one-size-fits-all.\n\nWe first understand your setup, find what's draining time and money, then build and deploy solutions that actually fit.",
       "quick_replies_pl": [
-        { "label": "Jakie usługi?", "val": "#services" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Skontaktuj się", "val": "#contact" }
+        {
+          "label": "Jakie usługi?",
+          "val": "#services"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Skontaktuj się",
+          "val": "#contact"
+        }
       ],
       "quick_replies_en": [
-        { "label": "What services?", "val": "#services" },
-        { "label": "How does it work?", "val": "#how_it_works" },
-        { "label": "Get in touch", "val": "#contact" }
+        {
+          "label": "What services?",
+          "val": "#services"
+        },
+        {
+          "label": "How does it work?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Get in touch",
+          "val": "#contact"
+        }
       ]
     },
-
     {
       "id": "services",
-      "keywords_pl": ["usługi", "usług", "oferta", "oferty", "co budujecie", "co tworzycie", "możliwości", "możliwość", "jakie macie", "jakie są", "co macie", "lista", "pełna lista", "co robisz", "co potraficie", "zakres", "katalog", "co mogę zamówić", "produkty", "rozwiązania", "co proponujecie", "co wdrażacie", "w czym możecie", "jakie opcje", "opcje", "propozycje", "pomysły"],
-      "keywords_en": ["services", "what services", "offer", "what do you offer", "what can you do", "list", "full list", "options", "solutions", "what you build", "capabilities", "products", "range"],
-      "response_pl": "Budujemy w 15 obszarach — oto przegląd. Kliknij w co Cię interesuje:",
-      "response_en": "We build across 15 areas — here's an overview. Click on what interests you:",
+      "keywords_pl": [
+        "usługi",
+        "usług",
+        "oferta",
+        "oferty",
+        "co budujecie",
+        "co tworzycie",
+        "możliwości",
+        "możliwość",
+        "jakie macie",
+        "jakie są",
+        "co macie",
+        "lista",
+        "pełna lista",
+        "co potraficie",
+        "zakres",
+        "katalog",
+        "co mogę zamówić",
+        "produkty",
+        "rozwiązania",
+        "co proponujecie",
+        "co wdrażacie",
+        "jakie opcje",
+        "opcje",
+        "wszystkie usługi",
+        "pełna oferta",
+        "co można u was zrobić",
+        "czym możecie mi pomóc",
+        "co mogę u was zamówić",
+        "pełen zakres",
+        "całościowa oferta"
+      ],
+      "keywords_en": [
+        "services",
+        "what services",
+        "offer",
+        "what do you offer",
+        "what can you do",
+        "list",
+        "full list",
+        "options",
+        "solutions",
+        "what you build",
+        "capabilities",
+        "products",
+        "range",
+        "all services",
+        "full offer",
+        "what can i get",
+        "everything you offer"
+      ],
+      "response_pl": "Budujemy w 15 obszarach — od agentów AI po automatyzację finansów i e-commerce. Kliknij w to co Cię interesuje:",
+      "response_en": "We build across 15 areas — from AI agents to finance automation and e-commerce. Click on what interests you:",
       "quick_replies_pl": [
-        { "label": "Agenci AI", "val": "#ai_agents" },
-        { "label": "Obsługa klienta", "val": "#customer_experience" },
-        { "label": "Sprzedaż", "val": "#sales_agent" },
-        { "label": "HR & rekrutacja", "val": "#hr_agent" }
+        {
+          "label": "Agenci AI",
+          "val": "#ai_agents"
+        },
+        {
+          "label": "Obsługa klienta",
+          "val": "#customer_experience"
+        },
+        {
+          "label": "Sprzedaż",
+          "val": "#sales_agent"
+        },
+        {
+          "label": "HR & rekrutacja",
+          "val": "#hr_agent"
+        },
+        {
+          "label": "Automatyzacja",
+          "val": "#workflow_automation"
+        },
+        {
+          "label": "Analityka danych",
+          "val": "#data_analytics"
+        }
       ],
       "quick_replies_en": [
-        { "label": "AI Agents", "val": "#ai_agents" },
-        { "label": "Customer Service", "val": "#customer_experience" },
-        { "label": "Sales", "val": "#sales_agent" },
-        { "label": "HR & Recruitment", "val": "#hr_agent" }
+        {
+          "label": "AI Agents",
+          "val": "#ai_agents"
+        },
+        {
+          "label": "Customer Service",
+          "val": "#customer_experience"
+        },
+        {
+          "label": "Sales",
+          "val": "#sales_agent"
+        },
+        {
+          "label": "HR & Recruitment",
+          "val": "#hr_agent"
+        },
+        {
+          "label": "Process Automation",
+          "val": "#workflow_automation"
+        },
+        {
+          "label": "Data Analytics",
+          "val": "#data_analytics"
+        }
       ]
     },
-
     {
       "id": "ai_agents",
-      "keywords_pl": ["agent ai", "agenci ai", "specjalista ai", "własny ai", "dedykowany ai", "ai specialist", "llm", "lokalny model", "lokalny ai", "wytrenowany", "własny model"],
-      "keywords_en": ["ai agent", "ai agents", "ai specialist", "custom ai", "dedicated ai", "local ai", "local llm", "trained model"],
-      "response_pl": "Agent AI to dedykowany ekspert — prawnik, analityk, asystent HR, doradca produktowy — dostępny 24/7, wytrenowany na Twoich danych.\n\nNie korzysta z zewnętrznych serwerów — działa lokalnie lub w chmurze w zależności od wymagań. Zawsze na temat, zawsze zgodny z Twoimi procedurami. Klienci wdrażają je do odpowiadania na pytania pracowników, dokumentowania procesów, tworzenia ofert czy analizowania umów.",
-      "response_en": "An AI Agent is a dedicated expert — lawyer, analyst, HR assistant, product advisor — available 24/7, trained on your data.\n\nIt doesn't use external servers — it runs locally or in the cloud depending on your requirements. Always on-topic, always aligned with your procedures. Clients use them to answer employee questions, document processes, generate proposals, or analyze contracts.",
+      "keywords_pl": [
+        "agent ai",
+        "agenci ai",
+        "specjalista ai",
+        "własny ai",
+        "dedykowany ai",
+        "llm",
+        "lokalny model",
+        "lokalny ai",
+        "wytrenowany",
+        "własny model",
+        "gpt dla firmy",
+        "własne gpt",
+        "asystent ai",
+        "bot ai",
+        "inteligentny asystent",
+        "ai ekspert",
+        "ai doradca",
+        "ai prawnik",
+        "ai analityk",
+        "asystent hr ai",
+        "wewnętrzny ekspert ai",
+        "ai dla pracowników",
+        "chatbot firmowy",
+        "bot wewnętrzny",
+        "wewnętrzny chatbot",
+        "model językowy firmowy",
+        "ai na własnych danych",
+        "ai z danych firmy",
+        "inteligentny bot firmowy",
+        "model wytrenowany na danych",
+        "asystent całodobowy",
+        "sztuczna inteligencja asystent"
+      ],
+      "keywords_en": [
+        "ai agent",
+        "ai agents",
+        "ai specialist",
+        "custom ai",
+        "dedicated ai",
+        "local ai",
+        "local llm",
+        "trained model",
+        "gpt for business",
+        "own gpt",
+        "ai assistant",
+        "ai bot",
+        "intelligent assistant",
+        "ai expert",
+        "ai advisor",
+        "ai lawyer",
+        "ai analyst",
+        "internal ai",
+        "company chatbot",
+        "internal chatbot",
+        "language model",
+        "ai on own data",
+        "ai trained on data",
+        "always on assistant"
+      ],
+      "response_pl": "Agent AI to dedykowany ekspert — prawnik, analityk, asystent HR, doradca produktowy — dostępny 24/7, wytrenowany na Twoich danych i dokumentach.\n\nNie korzysta z zewnętrznych baz danych. Działa lokalnie lub w chmurze, zależnie od wymagań — zawsze na temat, zawsze zgodny z Twoimi procedurami.\n\n<strong>Przykłady zastosowań:</strong> odpowiadanie na pytania pracowników o procedury, tworzenie ofert i propozycji, analiza umów, wsparcie działu prawnego, asystent produktowy dla klientów.",
+      "response_en": "An AI Agent is a dedicated expert — lawyer, analyst, HR assistant, product advisor — available 24/7, trained on your data and documents.\n\nIt doesn't use external databases. Runs locally or in the cloud depending on requirements — always on-topic, always aligned with your procedures.\n\n<strong>Use cases:</strong> answering employee questions about procedures, creating proposals and offers, contract analysis, legal department support, product assistant for customers.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        },
+        {
+          "label": "Baza wiedzy",
+          "val": "#knowledge_base"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        },
+        {
+          "label": "Knowledge Base",
+          "val": "#knowledge_base"
+        }
       ]
     },
-
     {
       "id": "customer_experience",
-      "keywords_pl": ["obsługa klienta", "customer service", "klient", "pytania klientów", "skargi", "reklamacje", "support", "chatbot klient", "odpowiadanie na pytania", "helpdesk"],
-      "keywords_en": ["customer service", "customer experience", "customer support", "client questions", "complaints", "helpdesk", "support bot"],
-      "response_pl": "AI obsługuje zapytania, reklamacje i zgłoszenia supportowe automatycznie — w dowolnym języku, o każdej porze, bez jednej pominiętej wiadomości.\n\nPrzykłady: agent odpowiadający na pytania o produkt/usługę, bot triagujący zgłoszenia i przypisujący je do odpowiednich osób, automatyczne odpowiedzi na maile z prośbami o fakturę czy status zamówienia. Integruje się z e-mailem, czatem na stronie, WhatsApp, Messengera.",
-      "response_en": "AI handles inquiries, complaints, and support tickets automatically — in any language, at any hour, without a single missed message.\n\nExamples: agent answering product/service questions, bot triaging and routing tickets, automated replies to invoice or order status requests. Integrates with email, website chat, WhatsApp, Messenger.",
+      "keywords_pl": [
+        "obsługa klienta",
+        "customer service",
+        "klienci",
+        "pytania klientów",
+        "zapytania klientów",
+        "odpowiedzi klientom",
+        "support",
+        "helpdesk",
+        "reklamacje",
+        "skargi",
+        "zgłoszenia",
+        "czat na stronie",
+        "live chat",
+        "bot do obsługi",
+        "automatyczne odpowiedzi na zapytania",
+        "odpowiadanie klientom",
+        "serwis klienta",
+        "biuro obsługi",
+        "whatsapp bot",
+        "messenger bot",
+        "klient pisze",
+        "mail od klienta",
+        "chat na stronie",
+        "wsparcie klienta",
+        "bot klienta",
+        "obsługa online",
+        "automatyczny support",
+        "obsługa przez bota",
+        "automatyczny helpdesk",
+        "szybka obsługa klienta",
+        "natychmiastowa odpowiedź klientom",
+        "obsługa bez opóźnień"
+      ],
+      "keywords_en": [
+        "customer service",
+        "customer experience",
+        "customer support",
+        "client questions",
+        "customer inquiries",
+        "support tickets",
+        "complaints",
+        "helpdesk",
+        "website chat",
+        "live chat",
+        "customer chat bot",
+        "automate customer replies",
+        "whatsapp bot",
+        "messenger bot",
+        "chat support",
+        "instant replies",
+        "auto response",
+        "client support bot",
+        "customer care automation"
+      ],
+      "response_pl": "AI obsługuje zapytania, reklamacje i zgłoszenia supportowe automatycznie — w dowolnym języku, o każdej porze, bez jednej pominiętej wiadomości.\n\n<strong>Przykłady:</strong> agent odpowiadający na pytania o produkt/usługę, bot triagujący zgłoszenia i przypisujący je do właściwych osób, automatyczne odpowiedzi na maile z prośbą o fakturę czy status zamówienia.\n\nIntegruje się z e-mailem, czatem na stronie, WhatsApp i Messengerem.",
+      "response_en": "AI handles inquiries, complaints, and support tickets automatically — in any language, at any hour, without a single missed message.\n\n<strong>Examples:</strong> agent answering product/service questions, bot triaging and routing tickets, automated replies to invoice or order status requests.\n\nIntegrates with email, website chat, WhatsApp, and Messenger.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Automatyzacja emaili",
+          "val": "#email_automation"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Email Automation",
+          "val": "#email_automation"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "sales_agent",
-      "keywords_pl": ["sprzedaż", "agent sprzedaży", "leady", "lead", "prospecting", "follow-up", "oferty", "pipeline", "crm", "kwalifikacja leadów", "handlowiec"],
-      "keywords_en": ["sales", "sales agent", "leads", "lead qualification", "prospecting", "follow-up", "pipeline", "crm"],
-      "response_pl": "Agent sprzedaży kwalifikuje leady, prowadzi follow-up z potencjalnymi klientami i wspiera Twój zespół handlowy — żadna okazja nie wpada w szczelinę.\n\nPrzykłady: automatyczny follow-up po pobraniu materiałów ze strony, kwalifikacja formularzy kontaktowych i przypisanie do odpowiedniego handlowca, przypomnienia o odświeżeniu oferty, podsumowania rozmów sprzedażowych.",
-      "response_en": "The sales agent qualifies leads, follows up with prospects, and supports your sales team — so no opportunity slips through the cracks.\n\nExamples: automatic follow-up after content downloads, qualification of contact forms and assignment to the right rep, offer refresh reminders, sales call summaries.",
+      "keywords_pl": [
+        "sprzedaż",
+        "agent sprzedaży",
+        "leady",
+        "lead",
+        "prospecting",
+        "follow-up",
+        "oferty",
+        "pipeline",
+        "crm",
+        "kwalifikacja leadów",
+        "handlowiec",
+        "przedstawiciel handlowy",
+        "nowy klient",
+        "pozyskiwanie klientów",
+        "zimny email",
+        "cold email",
+        "cold calling",
+        "zimne maile",
+        "sprzedaż automatyczna",
+        "bot sprzedażowy",
+        "automatyczna sprzedaż",
+        "szybciej sprzedawać",
+        "więcej sprzedaży",
+        "sprzedawać więcej",
+        "automatyzacja sprzedaży",
+        "pozyskiwanie leadów",
+        "konwersja leadów",
+        "odpowiedź na formularze",
+        "hot lead",
+        "lejek sprzedażowy",
+        "zamknięcie sprzedaży",
+        "dosprzedaż",
+        "upsell",
+        "nowi klienci automatycznie",
+        "follow up sprzedaż"
+      ],
+      "keywords_en": [
+        "sales",
+        "sales agent",
+        "leads",
+        "lead qualification",
+        "prospecting",
+        "follow-up",
+        "pipeline",
+        "crm",
+        "new clients",
+        "customer acquisition",
+        "cold email",
+        "sales automation",
+        "sales bot",
+        "more sales",
+        "increase revenue",
+        "convert leads",
+        "sales funnel",
+        "upsell",
+        "cross-sell",
+        "sales follow up",
+        "contact forms",
+        "hot leads",
+        "close deals"
+      ],
+      "response_pl": "Agent sprzedaży kwalifikuje leady, prowadzi follow-up z potencjalnymi klientami i wspiera Twój zespół handlowy — żadna okazja nie wpada w szczelinę.\n\n<strong>Przykłady:</strong> automatyczny follow-up po pobraniu materiałów ze strony, kwalifikacja formularzy kontaktowych i przypisanie do odpowiedniego handlowca, przypomnienia o odświeżeniu oferty, podsumowania rozmów sprzedażowych.\n\nIntegruje się z HubSpot, Pipedrive, Salesforce, Notion.",
+      "response_en": "The sales agent qualifies leads, follows up with prospects, and supports your sales team — so no opportunity slips through the cracks.\n\n<strong>Examples:</strong> automatic follow-up after content downloads, contact form qualification and routing, offer refresh reminders, sales call summaries.\n\nIntegrates with HubSpot, Pipedrive, Salesforce, Notion.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Obsługa klienta",
+          "val": "#customer_experience"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Customer Service",
+          "val": "#customer_experience"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "hr_agent",
-      "keywords_pl": ["hr", "rekrutacja", "onboarding", "cv", "kandydaci", "pracownicy", "zatrudnianie", "rozmowa kwalifikacyjna", "offboarding", "zasoby ludzkie"],
-      "keywords_en": ["hr", "recruitment", "onboarding", "cv", "candidates", "employees", "hiring", "interview", "human resources"],
-      "response_pl": "Agent HR przegląda CV, umawia rozmowy kwalifikacyjne i onboarduje nowych pracowników — skracając tygodnie ręcznej pracy do kilku godzin.\n\nPrzykłady: automatyczne filtrowanie CV według kryteriów, wysyłanie zaproszeń na rozmowy z linkami do kalendarza, generowanie pakietów powitalnych dla nowych pracowników, przypomnienia o szkoleniach i certyfikatach.",
-      "response_en": "The HR agent screens CVs, schedules interviews, and onboards new employees — cutting weeks of manual work down to hours.\n\nExamples: automatic CV filtering by criteria, sending interview invites with calendar links, generating onboarding packs for new hires, training and certification reminders.",
+      "keywords_pl": [
+        "hr",
+        "rekrutacja",
+        "onboarding",
+        "cv",
+        "kandydaci",
+        "pracownicy",
+        "zatrudnianie",
+        "rozmowa kwalifikacyjna",
+        "offboarding",
+        "zasoby ludzkie",
+        "selekcja cv",
+        "filtrowanie cv",
+        "automatyczna rekrutacja",
+        "nowi pracownicy",
+        "szkolenia pracowników",
+        "pakiet powitalny",
+        "screening kandydatów",
+        "ogłoszenia o pracę",
+        "odpowiedzi kandydatom",
+        "ocena kandydatów",
+        "zarządzanie kandydatami",
+        "weryfikacja cv",
+        "zaproszenia na rozmowy",
+        "automatyczny onboarding",
+        "ats",
+        "system rekrutacyjny",
+        "dział hr",
+        "procesy hr",
+        "human resources",
+        "welcome pack",
+        "wdrożenie pracownika"
+      ],
+      "keywords_en": [
+        "hr",
+        "recruitment",
+        "onboarding",
+        "cv",
+        "candidates",
+        "employees",
+        "hiring",
+        "interview",
+        "human resources",
+        "cv screening",
+        "candidate filtering",
+        "recruitment automation",
+        "new employees",
+        "staff training",
+        "job applications",
+        "applicant tracking",
+        "ats",
+        "onboarding automation",
+        "employee onboarding",
+        "welcome pack",
+        "candidate management",
+        "hr automation"
+      ],
+      "response_pl": "Agent HR przegląda CV, umawia rozmowy kwalifikacyjne i onboarduje nowych pracowników — skracając tygodnie ręcznej pracy do kilku godzin.\n\n<strong>Przykłady:</strong> automatyczne filtrowanie CV według kryteriów, wysyłanie zaproszeń na rozmowy z linkami do kalendarza, generowanie pakietów powitalnych dla nowych pracowników, przypomnienia o szkoleniach i certyfikatach.\n\nDziała z każdym ATS-em i systemem HR.",
+      "response_en": "The HR agent screens CVs, schedules interviews, and onboards new employees — cutting weeks of manual work down to hours.\n\n<strong>Examples:</strong> automatic CV filtering by criteria, sending interview invites with calendar links, generating onboarding packs for new hires, training and certification reminders.\n\nWorks with any ATS and HR system.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Automatyzacja emaili",
+          "val": "#email_automation"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Email Automation",
+          "val": "#email_automation"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "knowledge_base",
-      "keywords_pl": ["baza wiedzy", "dokumenty", "procedury", "instrukcje", "manualy", "wewnętrzna wiedza", "wyszukiwanie dokumentów", "rag", "wiki", "onboarding wiedza"],
-      "keywords_en": ["knowledge base", "documents", "procedures", "manuals", "internal knowledge", "document search", "rag", "wiki"],
-      "response_pl": "Całą wiedzę firmową — dokumenty, procedury, manualy — zamieniamy w bazę dostępną przez zwykłą rozmowę z agentem.\n\nPracownik zamiast szukać pliku przez 15 minut, pyta agenta i dostaje precyzyjną odpowiedź w 5 sekund. Sprawdza się w call center, onboardingu, dziale prawnym, produkcji — wszędzie tam gdzie wiedza jest porozrzucana po plikach.",
-      "response_en": "All your company knowledge — documents, procedures, manuals — becomes searchable through a simple conversation with an agent.\n\nInstead of spending 15 minutes hunting for a file, an employee asks the agent and gets a precise answer in 5 seconds. Works in call centers, onboarding, legal, production — wherever knowledge is scattered across files.",
+      "keywords_pl": [
+        "baza wiedzy",
+        "dokumenty",
+        "procedury",
+        "instrukcje",
+        "manualy",
+        "wewnętrzna wiedza",
+        "wyszukiwanie dokumentów",
+        "rag",
+        "wiki",
+        "onboarding wiedza",
+        "wiedza firmowa",
+        "przeszukiwanie dokumentów",
+        "firma w dokumentach",
+        "pytania o procedury",
+        "szybkie odpowiedzi z dokumentów",
+        "dostęp do wiedzy",
+        "firmowe pdf",
+        "firmowe pliki",
+        "firmowa dokumentacja",
+        "szukanie w dokumentach",
+        "wydobycie wiedzy",
+        "knowledge management",
+        "chatbot do dokumentów",
+        "chatbot na dokumentach",
+        "ai na dokumentach firmy",
+        "pytaj o dokumenty",
+        "wewnętrzny asystent wiedzy",
+        "zarządzanie wiedzą",
+        "baza dokumentów",
+        "wyszukiwanie w plikach"
+      ],
+      "keywords_en": [
+        "knowledge base",
+        "documents",
+        "procedures",
+        "manuals",
+        "internal knowledge",
+        "document search",
+        "rag",
+        "wiki",
+        "company knowledge",
+        "document retrieval",
+        "search documents",
+        "knowledge management",
+        "internal chatbot",
+        "company files",
+        "company pdfs",
+        "ask documents",
+        "ai on documents",
+        "internal knowledge assistant",
+        "document bot",
+        "search files"
+      ],
+      "response_pl": "Całą wiedzę firmową — dokumenty, procedury, manualy, pliki PDF — zamieniamy w bazę dostępną przez zwykłą rozmowę z agentem.\n\nPracownik zamiast szukać pliku przez 15 minut, pyta agenta i dostaje precyzyjną odpowiedź w 5 sekund. Agent podaje też źródło — konkretny dokument i stronę.\n\n<strong>Sprawdza się w:</strong> call center, onboardingu, dziale prawnym, produkcji, compliance — wszędzie tam gdzie wiedza jest porozrzucana po plikach.",
+      "response_en": "All your company knowledge — documents, procedures, manuals, PDFs — becomes searchable through a simple conversation with an agent.\n\nInstead of 15 minutes hunting for a file, an employee asks the agent and gets a precise answer in 5 seconds. The agent also cites the source — specific document and page.\n\n<strong>Works great in:</strong> call centers, onboarding, legal, production, compliance — wherever knowledge is scattered across files.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Agenci AI",
+          "val": "#ai_agents"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "AI Agents",
+          "val": "#ai_agents"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "document_automation",
-      "keywords_pl": ["dokumenty", "umowy", "kontrakty", "oferty handlowe", "szablony", "generowanie dokumentów", "automatyczne dokumenty", "raporty", "faktury szablony"],
-      "keywords_en": ["documents", "contracts", "proposals", "templates", "document generation", "automated documents", "reports"],
-      "response_pl": "Automatycznie generujemy kontrakty, propozycje i raporty z szablonów — precyzyjnie, szybko i zawsze zgodnie z identyfikacją marki.\n\nPrzykłady: oferta handlowa generowana automatycznie na podstawie formularza z CRM, umowa z uzupełnionymi danymi klienta wysyłana do podpisu w ciągu minut, miesięczny raport tworzony i wysyłany bez udziału człowieka.",
-      "response_en": "We automatically generate contracts, proposals, and reports from templates — accurate, fast, and always on-brand.\n\nExamples: sales proposal auto-generated from a CRM form, contract with client data sent for signature within minutes, monthly report created and sent without human involvement.",
+      "keywords_pl": [
+        "umowy",
+        "kontrakty",
+        "oferty handlowe",
+        "szablony",
+        "generowanie dokumentów",
+        "automatyczne dokumenty",
+        "automatyczne umowy",
+        "kontrakt automatyczny",
+        "propozycja handlowa",
+        "oferta pdf",
+        "generowanie ofert",
+        "tworzenie dokumentów",
+        "auto generowanie",
+        "esign",
+        "podpis elektroniczny",
+        "automat do umów",
+        "tworzenie umów automatycznie",
+        "dokumenty z crm",
+        "oferta z crm",
+        "generowanie propozycji",
+        "propozycje automatyczne",
+        "kontrakt na podstawie formularza",
+        "word automatyczny",
+        "pdf automatyczny"
+      ],
+      "keywords_en": [
+        "contracts",
+        "proposals",
+        "templates",
+        "document generation",
+        "automated documents",
+        "auto contracts",
+        "document creation",
+        "proposal generation",
+        "esign",
+        "electronic signature",
+        "document drafting",
+        "contracts from crm",
+        "pdf generation",
+        "word automation",
+        "auto proposal",
+        "offer generation"
+      ],
+      "response_pl": "Automatycznie generujemy kontrakty, propozycje i raporty z szablonów — precyzyjnie, szybko i zawsze zgodnie z identyfikacją marki.\n\n<strong>Przykłady:</strong> oferta handlowa generowana automatycznie na podstawie formularza lub danych z CRM, umowa z uzupełnionymi danymi klienta wysyłana do podpisu w ciągu minut, miesięczny raport tworzony i wysyłany bez udziału człowieka.\n\nObsługujemy Word, PDF, Google Docs i integracje z e-podpisem (DocuSign, Autenti).",
+      "response_en": "We automatically generate contracts, proposals, and reports from templates — accurate, fast, and always on-brand.\n\n<strong>Examples:</strong> sales proposal auto-generated from a CRM form, contract with client data sent for signature within minutes, monthly report created and sent without human involvement.\n\nWe support Word, PDF, Google Docs, and e-signature integrations (DocuSign, Autenti).",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Automatyzacja finansów",
+          "val": "#finance_automation"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Finance Automation",
+          "val": "#finance_automation"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "data_analytics",
-      "keywords_pl": ["dane", "analityka", "raporty", "wykresy", "dashboard", "bi", "business intelligence", "analiza danych", "insights", "kpi", "metryki", "statystyki", "excel dane"],
-      "keywords_en": ["data", "analytics", "reports", "charts", "dashboard", "business intelligence", "data analysis", "insights", "kpi", "metrics", "statistics"],
-      "response_pl": "Podłączamy Twoje źródła danych i generujemy automatyczne raporty, insighty i alerty — bez dotykania arkuszy kalkulacyjnych.\n\nPrzykłady: codzienny raport sprzedaży wysyłany o 8 rano do menagera, alert gdy KPI spada poniżej progu, automatyczny dashboard z danymi z kilku systemów, tygodniowe podsumowanie dla zarządu.",
-      "response_en": "We connect your data sources and generate automatic reports, insights, and alerts — without touching spreadsheets.\n\nExamples: daily sales report sent at 8am to the manager, alert when a KPI drops below threshold, automatic dashboard pulling from multiple systems, weekly board summary.",
+      "keywords_pl": [
+        "analityka",
+        "raporty",
+        "wykresy",
+        "dashboard",
+        "bi",
+        "business intelligence",
+        "analiza danych",
+        "insights",
+        "kpi",
+        "metryki",
+        "statystyki",
+        "excel dane",
+        "wizualizacja danych",
+        "raport sprzedaży",
+        "raport tygodniowy",
+        "automatyczny raport",
+        "dane z systemów",
+        "agregacja danych",
+        "codzienny raport",
+        "raport zarządczy",
+        "raport dla zarządu",
+        "dane z kilku systemów",
+        "łączenie danych",
+        "analiza wyników",
+        "monitoring kpi",
+        "śledzenie kpi",
+        "analiza trendów",
+        "raportowanie",
+        "automatyzacja raportów",
+        "raport excel",
+        "raport pdf",
+        "dane biznesowe",
+        "wizualizacja wykresów"
+      ],
+      "keywords_en": [
+        "analytics",
+        "reports",
+        "charts",
+        "dashboard",
+        "business intelligence",
+        "data analysis",
+        "insights",
+        "kpi",
+        "metrics",
+        "statistics",
+        "data visualization",
+        "sales report",
+        "automatic reports",
+        "data aggregation",
+        "management report",
+        "board report",
+        "kpi tracking",
+        "trend analysis",
+        "reporting automation",
+        "excel report",
+        "data dashboard"
+      ],
+      "response_pl": "Podłączamy Twoje źródła danych i generujemy automatyczne raporty, insighty i alerty — bez dotykania arkuszy kalkulacyjnych.\n\n<strong>Przykłady:</strong> codzienny raport sprzedaży wysyłany o 8 rano do menagera, alert gdy KPI spada poniżej progu, automatyczny dashboard z danymi z kilku systemów, tygodniowe podsumowanie dla zarządu.\n\nIntegrujemy się z Google Sheets, Airtable, bazami SQL, HubSpot, Salesforce i innymi.",
+      "response_en": "We connect your data sources and generate automatic reports, insights, and alerts — without touching spreadsheets.\n\n<strong>Examples:</strong> daily sales report sent at 8am to the manager, alert when a KPI drops below threshold, automatic dashboard from multiple systems, weekly board summary.\n\nWe integrate with Google Sheets, Airtable, SQL databases, HubSpot, Salesforce, and more.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Automatyzacja procesów",
+          "val": "#workflow_automation"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Process Automation",
+          "val": "#workflow_automation"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "workflow_automation",
-      "keywords_pl": ["workflow", "automatyzacja procesów", "przepływ pracy", "integracja systemów", "make", "n8n", "zapier", "powtarzalne zadania", "ręczna praca", "eliminacja pracy", "połączenie narzędzi", "integracja", "automatyzacja"],
-      "keywords_en": ["workflow", "process automation", "workflow automation", "system integration", "make", "n8n", "zapier", "repetitive tasks", "manual work", "tool integration"],
-      "response_pl": "Eliminujemy ręczne przenoszenie danych między narzędziami. To co wcześniej zajmowało godziny teraz dzieje się w tle, natychmiast.\n\nPracujemy na Make.com i n8n. Przykłady: nowe zamówienie w sklepie → faktura + update w magazynie + powiadomienie kuriera, nowy lead w formularzu → zapis w CRM + email powitalny + zadanie dla handlowca, nowy pracownik → konto w systemach + welcome pack + harmonogram szkoleń.",
-      "response_en": "We eliminate manual data transfer between tools. What used to take hours now happens in the background, instantly.\n\nWe work with Make.com and n8n. Examples: new order → invoice + warehouse update + courier notification, new lead → CRM entry + welcome email + task for sales rep, new hire → system accounts + welcome pack + training schedule.",
+      "keywords_pl": [
+        "workflow",
+        "automatyzacja procesów",
+        "przepływ pracy",
+        "integracja systemów",
+        "make",
+        "n8n",
+        "zapier",
+        "powtarzalne zadania",
+        "ręczna praca",
+        "eliminacja pracy",
+        "połączenie narzędzi",
+        "integracja",
+        "automatyzacja",
+        "procesy",
+        "zautomatyzować",
+        "automatyzowanie",
+        "kopiowanie danych",
+        "przenoszenie danych",
+        "połączenie aplikacji",
+        "make.com",
+        "integracja aplikacji",
+        "ręczne zadania",
+        "codzienne powtarzające się czynności",
+        "oszczędność czasu",
+        "zaoszczędzić czas",
+        "praca powtarzalna",
+        "eliminacja błędów",
+        "błędy ludzkie",
+        "automatyzacja biznesu",
+        "usprawnienie procesów",
+        "optymalizacja procesów",
+        "połączenie narzędzi biznesowych",
+        "automatyzacja operacyjna"
+      ],
+      "keywords_en": [
+        "workflow",
+        "process automation",
+        "workflow automation",
+        "system integration",
+        "make",
+        "n8n",
+        "zapier",
+        "repetitive tasks",
+        "manual work",
+        "tool integration",
+        "automate",
+        "automation",
+        "connecting apps",
+        "data transfer",
+        "integrate systems",
+        "save time",
+        "eliminate errors",
+        "business automation",
+        "operational automation",
+        "streamline processes",
+        "daily repetitive tasks"
+      ],
+      "response_pl": "Eliminujemy ręczne przenoszenie danych między narzędziami. To co wcześniej zajmowało godziny — teraz dzieje się w tle, natychmiast i bez błędów.\n\nPracujemy na Make.com i n8n.\n\n<strong>Przykłady:</strong>\n— Nowe zamówienie → faktura + update w magazynie + powiadomienie kuriera\n— Nowy lead w formularzu → zapis w CRM + email powitalny + zadanie dla handlowca\n— Nowy pracownik → konto w systemach + welcome pack + harmonogram szkoleń",
+      "response_en": "We eliminate manual data transfer between tools. What used to take hours now happens in the background, instantly and without errors.\n\nWe work with Make.com and n8n.\n\n<strong>Examples:</strong>\n— New order → invoice + warehouse update + courier notification\n— New form lead → CRM entry + welcome email + task for sales rep\n— New hire → system accounts + welcome pack + training schedule",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Analityka danych",
+          "val": "#data_analytics"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Data Analytics",
+          "val": "#data_analytics"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "social_media",
-      "keywords_pl": ["social media", "media społecznościowe", "instagram", "linkedin", "facebook", "tiktok", "posty", "content", "publikowanie", "harmonogram postów", "marketing treści", "content marketing"],
-      "keywords_en": ["social media", "instagram", "linkedin", "facebook", "tiktok", "posts", "content", "publishing", "content marketing", "social content"],
-      "response_pl": "Od tworzenia treści po harmonogramowanie i publikowanie — Twoja obecność w social media działa sama, podczas gdy Ty skupiasz się na biznesie.\n\nPrzykłady: automatyczne tworzenie postów na podstawie artykułów z bloga, generowanie karuzel LinkedIn ze statystyk firmy, planowanie i publikowanie postów na tydzień do przodu, raport zasięgów co poniedziałek.",
-      "response_en": "From content creation to scheduling and publishing — your social media presence runs itself while you focus on the business.\n\nExamples: automatic post generation from blog articles, LinkedIn carousel generation from company stats, weekly content planning and publishing, reach report every Monday.",
+      "keywords_pl": [
+        "social media",
+        "media społecznościowe",
+        "instagram",
+        "linkedin",
+        "facebook",
+        "tiktok",
+        "posty",
+        "content",
+        "publikowanie",
+        "harmonogram postów",
+        "marketing treści",
+        "content marketing",
+        "treści na social media",
+        "automatyczne posty",
+        "planowanie postów",
+        "harmonogram",
+        "pisanie postów",
+        "tworzenie treści",
+        "kreacje social media",
+        "auto publikowanie",
+        "posty automatycznie",
+        "zaplanowane posty",
+        "zarządzanie social media",
+        "content plan",
+        "strategia contentowa",
+        "posty linkedin",
+        "posty instagram",
+        "zasięgi social",
+        "kampania social media"
+      ],
+      "keywords_en": [
+        "social media",
+        "instagram",
+        "linkedin",
+        "facebook",
+        "tiktok",
+        "posts",
+        "content",
+        "publishing",
+        "content marketing",
+        "social content",
+        "automated posts",
+        "post scheduling",
+        "content creation",
+        "social media automation",
+        "content plan",
+        "social media management",
+        "reach",
+        "engagement",
+        "social campaigns"
+      ],
+      "response_pl": "Od tworzenia treści po harmonogramowanie i publikowanie — Twoja obecność w social media działa sama, podczas gdy Ty skupiasz się na biznesie.\n\n<strong>Przykłady:</strong> automatyczne tworzenie postów na podstawie artykułów z bloga lub newsów, generowanie karuzel LinkedIn ze statystyk firmy, planowanie i publikowanie postów na tydzień do przodu, raport zasięgów wysyłany co poniedziałek.\n\nObsługujemy Instagram, LinkedIn, Facebook, TikTok.",
+      "response_en": "From content creation to scheduling and publishing — your social media presence runs itself while you focus on the business.\n\n<strong>Examples:</strong> automatic post generation from blog articles or news, LinkedIn carousel generation from company stats, weekly content planning and publishing, reach report every Monday.\n\nWe support Instagram, LinkedIn, Facebook, TikTok.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Monitoring rynku",
+          "val": "#market_monitoring"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Market Monitoring",
+          "val": "#market_monitoring"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "ecommerce",
-      "keywords_pl": ["sklep internetowy", "e-commerce", "ecommerce", "zamówienia", "magazyn", "inventory", "powiadomienia klientów", "zwroty", "woo", "woocommerce", "shopify", "baselinker"],
-      "keywords_en": ["online store", "e-commerce", "ecommerce", "orders", "inventory", "customer notifications", "returns", "woocommerce", "shopify"],
-      "response_pl": "Automatyzujemy przetwarzanie zamówień, aktualizacje magazynu, powiadomienia dla klientów i obsługę zwrotów — w dowolnej skali.\n\nPrzykłady: automatyczna synchronizacja stanów magazynowych między kanałami sprzedaży, powiadomienie SMS + email przy każdym etapie zamówienia, automatyczne generowanie i wysyłka faktur, obsługa zwrotów bez udziału człowieka.",
-      "response_en": "We automate order processing, inventory updates, customer notifications, and returns — at any scale.\n\nExamples: automatic stock sync across sales channels, SMS + email notification at each order stage, automatic invoice generation and sending, returns handling without human involvement.",
+      "keywords_pl": [
+        "sklep internetowy",
+        "e-commerce",
+        "ecommerce",
+        "zamówienia",
+        "magazyn",
+        "inventory",
+        "powiadomienia klientów",
+        "zwroty",
+        "woo",
+        "woocommerce",
+        "shopify",
+        "baselinker",
+        "allegro",
+        "sklep online",
+        "automatyzacja sklepu",
+        "przetwarzanie zamówień",
+        "stany magazynowe",
+        "synchronizacja stanów",
+        "synchronizacja kanałów sprzedaży",
+        "powiadomienie o zamówieniu",
+        "faktura zamówienie",
+        "status zamówienia",
+        "obsługa zwrotów",
+        "zarządzanie sklepem",
+        "automatyzacja e-commerce"
+      ],
+      "keywords_en": [
+        "online store",
+        "e-commerce",
+        "ecommerce",
+        "orders",
+        "inventory",
+        "customer notifications",
+        "returns",
+        "woocommerce",
+        "shopify",
+        "store automation",
+        "order processing",
+        "stock management",
+        "retail automation",
+        "inventory sync",
+        "order notifications",
+        "invoice for order",
+        "order status",
+        "returns handling",
+        "sales channels",
+        "multi-channel"
+      ],
+      "response_pl": "Automatyzujemy przetwarzanie zamówień, aktualizacje magazynu, powiadomienia dla klientów i obsługę zwrotów — w dowolnej skali.\n\n<strong>Przykłady:</strong> automatyczna synchronizacja stanów magazynowych między kanałami (Allegro, Shopify, WooCommerce), powiadomienie SMS + email przy każdym etapie zamówienia, automatyczne generowanie i wysyłka faktur, obsługa zwrotów bez udziału człowieka.\n\nIntegrujemy się z BaseLinker, Shopify, WooCommerce, Allegro, Fakturownia.",
+      "response_en": "We automate order processing, inventory updates, customer notifications, and returns — at any scale.\n\n<strong>Examples:</strong> automatic stock sync across sales channels (Shopify, WooCommerce, Amazon), SMS + email notification at each order stage, automatic invoice generation and sending, returns handling without human involvement.\n\nWe integrate with Shopify, WooCommerce, Amazon, and major inventory systems.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Automatyzacja finansów",
+          "val": "#finance_automation"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Finance Automation",
+          "val": "#finance_automation"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "office_automation",
-      "keywords_pl": ["recepcjonista", "sekretariat", "biuro", "odbieranie telefonów", "umawianie spotkań", "zarządzanie kalendarzem", "asystent", "office", "administracja"],
-      "keywords_en": ["receptionist", "secretary", "office", "answering calls", "booking meetings", "calendar management", "assistant", "admin", "administration"],
-      "response_pl": "Agent odbiera połączenia, rezerwuje spotkania i zarządza kalendarzem — pełnoetatowy asystent który nigdy nie bierze wolnego.\n\nPrzykłady: voicebot odbierający rozmowy i przekierowujący do właściwej osoby, automatyczne umawianie wizyt przez link w mailu, zarządzanie salami konferencyjnymi, wysyłanie potwierdzeń i przypomnień o spotkaniach.",
-      "response_en": "The agent answers calls, books meetings, and manages calendars — a full-time assistant that never takes a day off.\n\nExamples: voicebot answering and routing calls, automatic appointment booking via email link, conference room management, sending meeting confirmations and reminders.",
+      "keywords_pl": [
+        "recepcjonista",
+        "sekretariat",
+        "biuro",
+        "odbieranie telefonów",
+        "umawianie spotkań",
+        "zarządzanie kalendarzem",
+        "asystent",
+        "office",
+        "administracja",
+        "voicebot",
+        "telefoniczny asystent",
+        "rezerwacja sal",
+        "potwierdzenia spotkań",
+        "przypomnienia o spotkaniach",
+        "wirtualna sekretarka",
+        "wirtualny recepcjonista",
+        "ai recepcjonista",
+        "odbieranie rozmów",
+        "przekierowanie rozmów",
+        "sala konferencyjna",
+        "kalendarz firmy",
+        "zarządzanie spotkaniami",
+        "przyjmowanie telefonów",
+        "automatyczna sekretarka",
+        "asystent telefoniczny"
+      ],
+      "keywords_en": [
+        "receptionist",
+        "secretary",
+        "office",
+        "answering calls",
+        "booking meetings",
+        "calendar management",
+        "assistant",
+        "admin",
+        "administration",
+        "voicebot",
+        "phone bot",
+        "meeting reminders",
+        "virtual receptionist",
+        "office assistant",
+        "conference room",
+        "call answering",
+        "call routing",
+        "ai receptionist",
+        "phone answering",
+        "scheduling assistant"
+      ],
+      "response_pl": "Agent odbiera połączenia, rezerwuje spotkania i zarządza kalendarzem — pełnoetatowy asystent który nigdy nie bierze wolnego.\n\n<strong>Przykłady:</strong> voicebot odbierający rozmowy i przekierowujący do właściwej osoby, automatyczne umawianie wizyt przez link w mailu, zarządzanie salami konferencyjnymi, wysyłanie potwierdzeń i przypomnień o spotkaniach.\n\nDziała przez telefon, e-mail i czat — dostępny 24/7.",
+      "response_en": "The agent answers calls, books meetings, and manages calendars — a full-time assistant that never takes a day off.\n\n<strong>Examples:</strong> voicebot answering and routing calls, automatic appointment booking via email link, conference room management, sending meeting confirmations and reminders.\n\nWorks via phone, email, and chat — available 24/7.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Planowanie spotkań",
+          "val": "#scheduling"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Scheduling",
+          "val": "#scheduling"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "finance_automation",
-      "keywords_pl": ["faktury", "płatności", "finanse", "księgowość", "przypomnienia o płatnościach", "rozliczenia", "zestawienia finansowe", "przychody", "koszty", "budżet"],
-      "keywords_en": ["invoices", "payments", "finance", "accounting", "payment reminders", "financial reports", "revenue", "costs", "budget"],
-      "response_pl": "Automatycznie przetwarzamy faktury, wysyłamy przypomnienia o płatnościach i generujemy zestawienia finansowe — zero ręcznego wprowadzania danych.\n\nPrzykłady: automatyczne wystawianie faktur po zamknięciu transakcji, sekwencja przypomnień do nieopłaconych faktur (3 dni, 7 dni, 14 dni), tygodniowy raport przychodów i kosztów, integracja z systemami FK (np. Comarch, Subiekt).",
-      "response_en": "We automatically process invoices, send payment reminders, and generate financial summaries — zero manual data entry.\n\nExamples: automatic invoice generation after closing a transaction, reminder sequences for unpaid invoices (3 days, 7 days, 14 days), weekly revenue and cost report, integration with accounting systems.",
+      "keywords_pl": [
+        "faktury",
+        "płatności",
+        "finanse",
+        "księgowość",
+        "przypomnienia o płatnościach",
+        "rozliczenia",
+        "zestawienia finansowe",
+        "przychody",
+        "koszty",
+        "budżet",
+        "fakturowanie",
+        "faktura automatyczna",
+        "wysyłanie faktur",
+        "nieopłacone faktury",
+        "przypomnienia płatności",
+        "rozrachunki",
+        "comarch",
+        "subiekt",
+        "systemy fk",
+        "automatyzacja faktur",
+        "wystawienie faktury",
+        "przeterminowane faktury",
+        "monit płatniczy",
+        "windykacja miękka",
+        "zestawienie kosztów",
+        "rozliczenie miesięczne",
+        "raport finansowy",
+        "finanse automatycznie",
+        "rachunkowość ai"
+      ],
+      "keywords_en": [
+        "invoices",
+        "payments",
+        "finance",
+        "accounting",
+        "payment reminders",
+        "financial reports",
+        "revenue",
+        "costs",
+        "budget",
+        "invoice automation",
+        "billing",
+        "unpaid invoices",
+        "payment collection",
+        "financial summaries",
+        "overdue invoices",
+        "monthly financial report",
+        "accounting automation"
+      ],
+      "response_pl": "Automatycznie przetwarzamy faktury, wysyłamy przypomnienia o płatnościach i generujemy zestawienia finansowe — zero ręcznego wprowadzania danych.\n\n<strong>Przykłady:</strong> automatyczne wystawianie faktur po zamknięciu transakcji, sekwencja przypomnień do nieopłaconych faktur (3 dni → 7 dni → 14 dni), tygodniowy raport przychodów i kosztów, integracja z systemami FK (Comarch, Subiekt, iFirma, Fakturownia).",
+      "response_en": "We automatically process invoices, send payment reminders, and generate financial summaries — zero manual data entry.\n\n<strong>Examples:</strong> automatic invoice generation after closing a transaction, reminder sequences for unpaid invoices (3 days → 7 days → 14 days), weekly revenue and cost report, integration with accounting systems.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Automatyzacja dokumentów",
+          "val": "#document_automation"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Document Automation",
+          "val": "#document_automation"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "email_automation",
-      "keywords_pl": ["email", "maile", "emaile", "skrzynka", "inbox", "autoresponder", "sortowanie maili", "odpowiedzi automatyczne", "newsletter", "kampania email", "follow-up email"],
-      "keywords_en": ["email", "emails", "inbox", "autoresponder", "email sorting", "auto-reply", "newsletter", "email campaign", "follow-up email"],
-      "response_pl": "Inteligentne sortowanie, auto-odpowiedzi i sekwencje follow-up — Twoja skrzynka zarządza się sama i pracuje na Ciebie.\n\nPrzykłady: automatyczna kategoryzacja przychodzących maili i przypisywanie do osób, odpowiedź na typowe zapytania bez udziału człowieka, sekwencja powitalna dla nowych klientów, follow-up po ofercie za 3 i 7 dni.",
-      "response_en": "Smart sorting, auto-replies, and follow-up sequences — your inbox manages itself and works for you.\n\nExamples: automatic categorization and assignment of incoming emails, replies to typical inquiries without human involvement, welcome sequence for new clients, post-proposal follow-up after 3 and 7 days.",
+      "keywords_pl": [
+        "email",
+        "maile",
+        "emaile",
+        "skrzynka",
+        "inbox",
+        "autoresponder",
+        "sortowanie maili",
+        "odpowiedzi automatyczne",
+        "newsletter",
+        "kampania email",
+        "follow-up email",
+        "zarządzanie emailem",
+        "automatyczne odpowiedzi email",
+        "organizacja skrzynki",
+        "filtrowanie maili",
+        "kategoryzacja maili",
+        "inbox zero",
+        "za dużo maili",
+        "chaos w skrzynce",
+        "przeładowana skrzynka",
+        "odpowiedzi na maile",
+        "pisanie maili",
+        "masowe maile",
+        "sekwencja maili",
+        "autoresponder sekwencja",
+        "email marketing",
+        "drip campaign",
+        "wiadomości powitalne",
+        "email po rejestracji"
+      ],
+      "keywords_en": [
+        "email",
+        "emails",
+        "inbox",
+        "autoresponder",
+        "email sorting",
+        "auto-reply",
+        "newsletter",
+        "email campaign",
+        "follow-up email",
+        "email management",
+        "automated replies",
+        "inbox organization",
+        "email filtering",
+        "inbox zero",
+        "too many emails",
+        "email sequences",
+        "drip campaign",
+        "welcome email",
+        "email marketing automation"
+      ],
+      "response_pl": "Inteligentne sortowanie, auto-odpowiedzi i sekwencje follow-up — Twoja skrzynka zarządza się sama i pracuje na Ciebie.\n\n<strong>Przykłady:</strong> automatyczna kategoryzacja przychodzących maili i przypisywanie do osób, odpowiedź na typowe zapytania bez udziału człowieka, sekwencja powitalna dla nowych klientów, follow-up po ofercie za 3 i 7 dni.\n\nDziała z Gmail, Outlook i dowolnym dostawcą poczty.",
+      "response_en": "Smart sorting, auto-replies, and follow-up sequences — your inbox manages itself and works for you.\n\n<strong>Examples:</strong> automatic categorization and assignment of incoming emails, replies to typical inquiries without human involvement, welcome sequence for new clients, post-proposal follow-up after 3 and 7 days.\n\nWorks with Gmail, Outlook, and any email provider.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Obsługa klienta",
+          "val": "#customer_experience"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Customer Service",
+          "val": "#customer_experience"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "scheduling",
-      "keywords_pl": ["kalendarz", "spotkania", "umawianie", "harmonogram", "booking", "rezerwacja", "terminarz", "cal.com", "calendly", "planowanie spotkań", "dostępność"],
-      "keywords_en": ["calendar", "scheduling", "meetings", "booking", "reservation", "cal.com", "calendly", "appointment booking", "availability"],
-      "response_pl": "Klienci bookują spotkania automatycznie, zsynchronizowane z całym zespołem — koniec z wymianą kilkunastu maili żeby ustalić termin.\n\nPrzykłady: link do kalendarza wysyłany automatycznie po wypełnieniu formularza kontaktowego, synchronizacja dostępności całego zespołu, przypomnienia SMS i email przed spotkaniem, automatyczne notatki po spotkaniu wysyłane do uczestników.",
-      "response_en": "Clients book meetings automatically, synced with your whole team — no more back-and-forth emails to find a time.\n\nExamples: calendar link sent automatically after contact form submission, full team availability sync, SMS and email reminders before meetings, automatic meeting notes sent to participants.",
+      "keywords_pl": [
+        "kalendarz",
+        "spotkania",
+        "umawianie",
+        "harmonogram",
+        "booking",
+        "rezerwacja",
+        "terminarz",
+        "cal.com",
+        "calendly",
+        "planowanie spotkań",
+        "dostępność",
+        "umawianie wizyt",
+        "link do kalendarza",
+        "automatyczne umawianie",
+        "wolny termin",
+        "sprawdzanie dostępności",
+        "rezerwacja spotkania",
+        "brak wolnych terminów",
+        "trudno umówić spotkanie",
+        "link bookingowy",
+        "dostępność zespołu",
+        "synchronizacja kalendarzy",
+        "reminders spotkań",
+        "potwierdzenia spotkań",
+        "booking online",
+        "automatyczny kalendarz",
+        "planowanie terminów"
+      ],
+      "keywords_en": [
+        "calendar",
+        "scheduling",
+        "meetings",
+        "booking",
+        "reservation",
+        "cal.com",
+        "calendly",
+        "appointment booking",
+        "availability",
+        "meeting scheduling",
+        "calendar link",
+        "automatic booking",
+        "find a time",
+        "calendar sync",
+        "meeting confirmation",
+        "meeting reminder",
+        "team availability",
+        "booking page",
+        "online booking"
+      ],
+      "response_pl": "Klienci bookują spotkania automatycznie, zsynchronizowane z całym zespołem — koniec z wymianą kilkunastu maili żeby ustalić termin.\n\n<strong>Przykłady:</strong> link do kalendarza wysyłany automatycznie po wypełnieniu formularza kontaktowego, synchronizacja dostępności całego zespołu, przypomnienia SMS i email przed spotkaniem, automatyczne notatki po spotkaniu wysyłane do uczestników.\n\nIntegrujemy się z Google Calendar, Outlook, Calendly, Cal.com.",
+      "response_en": "Clients book meetings automatically, synced with your whole team — no more back-and-forth emails to find a time.\n\n<strong>Examples:</strong> calendar link sent automatically after contact form submission, full team availability sync, SMS and email reminders before meetings, automatic meeting notes sent to participants.\n\nWe integrate with Google Calendar, Outlook, Calendly, Cal.com.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Asystent biura",
+          "val": "#office_automation"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Office Assistant",
+          "val": "#office_automation"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "market_monitoring",
-      "keywords_pl": ["monitoring", "monitorowanie", "newsy", "aktualności", "rynek", "konkurencja", "trendy", "briefingi", "codzienne raporty", "śledzenie zmian", "daily briefing"],
-      "keywords_en": ["monitoring", "news", "market", "competitors", "trends", "briefings", "daily reports", "tracking changes", "daily briefing", "market intelligence"],
-      "response_pl": "Codzienne briefingi o Twojej branży, konkurentach i kluczowych trendach — dostarczane automatycznie, każdego ranka.\n\nPrzykłady: poranny digest z artykułów branżowych wysyłany o 7:00, alert gdy konkurent zmieni ceny lub opublikuje nowy produkt, cotygodniowy raport trendów w branży, monitoring wzmianek o Twojej marce w mediach.",
-      "response_en": "Daily briefings on your industry, competitors, and key trends — delivered automatically, every morning.\n\nExamples: morning digest of industry articles sent at 7am, alert when a competitor changes prices or launches a new product, weekly industry trend report, brand mention monitoring in media.",
+      "keywords_pl": [
+        "monitoring",
+        "monitorowanie",
+        "newsy",
+        "aktualności",
+        "rynek",
+        "konkurencja",
+        "trendy",
+        "briefingi",
+        "codzienne raporty",
+        "śledzenie zmian",
+        "daily briefing",
+        "monitoring marki",
+        "wzmianki",
+        "monitoring konkurencji",
+        "branżowe newsy",
+        "śledzenie trendów",
+        "codzienny digest",
+        "poranne informacje",
+        "śledzenie konkurenta",
+        "zmiany na rynku",
+        "alerty rynkowe",
+        "alert o zmianach",
+        "konkurent zmienił ceny",
+        "nowy produkt konkurenta",
+        "raport branżowy",
+        "daily news digest",
+        "nowe artykuły branżowe",
+        "śledzenie prasy"
+      ],
+      "keywords_en": [
+        "monitoring",
+        "news",
+        "market",
+        "competitors",
+        "trends",
+        "briefings",
+        "daily reports",
+        "tracking changes",
+        "daily briefing",
+        "brand monitoring",
+        "competitor tracking",
+        "industry news",
+        "market intelligence",
+        "trend tracking",
+        "morning digest",
+        "competitor alerts",
+        "market changes",
+        "news digest",
+        "press monitoring"
+      ],
+      "response_pl": "Codzienne briefingi o Twojej branży, konkurentach i kluczowych trendach — dostarczane automatycznie, każdego ranka.\n\n<strong>Przykłady:</strong> poranny digest z artykułów branżowych wysyłany o 7:00, alert gdy konkurent zmieni ceny lub opublikuje nowy produkt, cotygodniowy raport trendów w branży, monitoring wzmianek o Twojej marce w mediach i social media.",
+      "response_en": "Daily briefings on your industry, competitors, and key trends — delivered automatically, every morning.\n\n<strong>Examples:</strong> morning digest of industry articles sent at 7am, alert when a competitor changes prices or launches a new product, weekly industry trend report, brand mention monitoring across media and social media.",
       "quick_replies_pl": [
-        { "label": "Ile kosztuje?", "val": "#pricing" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" },
-        { "label": "Inne usługi", "val": "#services" }
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Analityka danych",
+          "val": "#data_analytics"
+        },
+        {
+          "label": "Inne usługi",
+          "val": "#services"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Pricing?", "val": "#pricing" },
-        { "label": "How it works", "val": "#how_it_works" },
-        { "label": "Other services", "val": "#services" }
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Data Analytics",
+          "val": "#data_analytics"
+        },
+        {
+          "label": "Other services",
+          "val": "#services"
+        }
       ]
     },
-
     {
       "id": "how_it_works",
-      "keywords_pl": ["jak działa", "jak to działa", "jak wygląda", "jak zacząć", "jak rozpocząć", "co się dzieje", "etapy", "kroki", "proces", "wdrożenie", "ile trwa", "jak przebiega", "co po kolei", "od czego zacząć", "pierwszy krok", "współpraca", "jak wygląda współpraca"],
-      "keywords_en": ["how does it work", "how it works", "how to start", "what happens", "steps", "process", "onboarding", "how long", "timeline", "what's the process", "first step", "how do we begin"],
-      "response_pl": "Proces wygląda tak:\n\n① <strong>Discovery call</strong> — bezpłatna rozmowa, żeby zrozumieć Twój biznes i znaleźć wąskie gardła.\n\n② <strong>Propozycja</strong> — pokazujemy konkretne automatyzacje i szacowany zwrot z inwestycji.\n\n③ <strong>Budowanie</strong> — tworzymy i testujemy rozwiązanie razem z Tobą.\n\n④ <strong>Launch & wsparcie</strong> — wdrożenie, szkolenie, iteracje.",
-      "response_en": "Here's how it works:\n\n① <strong>Discovery call</strong> — a free call to understand your business and find bottlenecks.\n\n② <strong>Proposal</strong> — we show specific automations and estimated ROI.\n\n③ <strong>Build</strong> — we build and test the solution together with you.\n\n④ <strong>Launch & support</strong> — go live, training, iterations.",
+      "keywords_pl": [
+        "jak działa",
+        "jak to działa",
+        "jak wygląda",
+        "jak zacząć",
+        "jak rozpocząć",
+        "co się dzieje",
+        "etapy",
+        "kroki",
+        "proces",
+        "wdrożenie",
+        "ile trwa",
+        "jak przebiega",
+        "co po kolei",
+        "od czego zacząć",
+        "pierwszy krok",
+        "współpraca",
+        "jak wygląda współpraca",
+        "jak zamawiamy",
+        "jak zamówić",
+        "jak kupić",
+        "jak zaczynamy",
+        "co muszę zrobić",
+        "jak to zamówić",
+        "co dalej",
+        "jak zgłosić projekt",
+        "jak zacząć projekt",
+        "procedura zamówienia",
+        "jak przebiega projekt",
+        "ile czasu zajmuje",
+        "kiedy gotowe",
+        "jak długo trwa"
+      ],
+      "keywords_en": [
+        "how does it work",
+        "how it works",
+        "how to start",
+        "what happens",
+        "steps",
+        "process",
+        "onboarding",
+        "how long",
+        "timeline",
+        "first step",
+        "how do we begin",
+        "how to order",
+        "how to get started",
+        "what do i do",
+        "next steps",
+        "project process",
+        "how long does it take",
+        "when ready",
+        "delivery time"
+      ],
+      "response_pl": "Proces wygląda tak:\n\n① <strong>Discovery call</strong> — bezpłatna rozmowa (30 min), żeby zrozumieć Twój biznes i znaleźć wąskie gardła.\n\n② <strong>Propozycja</strong> — pokazujemy konkretne automatyzacje i szacowany zwrot z inwestycji.\n\n③ <strong>Budowanie</strong> — tworzymy i testujemy razem z Tobą. Zazwyczaj 1–4 tygodnie.\n\n④ <strong>Launch & wsparcie</strong> — wdrożenie, szkolenie, iteracje i ciągłe wsparcie.",
+      "response_en": "Here's how it works:\n\n① <strong>Discovery call</strong> — a free 30-min call to understand your business and find bottlenecks.\n\n② <strong>Proposal</strong> — we show specific automations and estimated ROI.\n\n③ <strong>Build</strong> — we build and test together. Usually 1–4 weeks.\n\n④ <strong>Launch & support</strong> — go live, training, iterations, and ongoing support.",
       "quick_replies_pl": [
-        { "label": "Umów rozmowę", "val": "#contact" },
-        { "label": "Jakie usługi?", "val": "#services" },
-        { "label": "Ile to kosztuje?", "val": "#pricing" }
+        {
+          "label": "Umów rozmowę",
+          "val": "#contact"
+        },
+        {
+          "label": "Jakie usługi?",
+          "val": "#services"
+        },
+        {
+          "label": "Ile to kosztuje?",
+          "val": "#pricing"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Book a call", "val": "#contact" },
-        { "label": "What services?", "val": "#services" },
-        { "label": "Pricing?", "val": "#pricing" }
+        {
+          "label": "Book a call",
+          "val": "#contact"
+        },
+        {
+          "label": "What services?",
+          "val": "#services"
+        },
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        }
       ]
     },
-
     {
       "id": "pricing",
-      "keywords_pl": ["cena", "cennik", "ile kosztuje", "koszt", "wycena", "ile", "pieniądze", "budżet", "płatność", "opłata", "za ile", "drogo", "tanio", "ile płacić", "stawka"],
-      "keywords_en": ["price", "pricing", "cost", "how much", "budget", "quote", "rates", "fee", "payment", "how expensive"],
-      "response_pl": "Nie mamy jednej stawki — wszystko wyceniamy indywidualnie po tym jak zrozumiemy Twój setup i wartość jaką automatyzacja przyniesie.\n\nNajlepiej umów bezpłatną rozmowę discovery — po niej możemy podać konkretną liczbę.",
-      "response_en": "No fixed pricing — everything is scoped individually after we understand your setup and the value the automation will bring.\n\nBest to book a free discovery call — after that we can give you a specific number.",
+      "keywords_pl": [
+        "cena",
+        "cennik",
+        "ile kosztuje",
+        "koszt",
+        "wycena",
+        "pieniądze",
+        "budżet",
+        "płatność",
+        "opłata",
+        "za ile",
+        "drogo",
+        "tanio",
+        "ile płacić",
+        "stawka",
+        "cenowo",
+        "koszty projektu",
+        "orientacyjna cena",
+        "widełki cenowe",
+        "ceny usług",
+        "abonament",
+        "jednorazowa płatność",
+        "miesięczna opłata",
+        "model płatności",
+        "jak liczycie"
+      ],
+      "keywords_en": [
+        "price",
+        "pricing",
+        "cost",
+        "how much",
+        "budget",
+        "quote",
+        "rates",
+        "fee",
+        "payment",
+        "how expensive",
+        "project cost",
+        "price range",
+        "subscription",
+        "one-time payment",
+        "monthly fee",
+        "payment model",
+        "how do you charge"
+      ],
+      "response_pl": "Nie mamy jednej stawki — wszystko wyceniamy indywidualnie po tym jak zrozumiemy Twój setup i wartość jaką automatyzacja przyniesie.\n\nZazwyczaj wycena składa się z jednorazowego kosztu budowania + opcjonalnego miesięcznego abonamentu na utrzymanie.\n\nNajlepiej umów bezpłatną rozmowę discovery — po niej możemy podać konkretną liczbę.",
+      "response_en": "No fixed pricing — everything is scoped individually after we understand your setup and the value the automation will bring.\n\nTypically the quote covers a one-time build cost + optional monthly maintenance.\n\nBest to book a free discovery call — after that we can give you a specific number.",
       "quick_replies_pl": [
-        { "label": "Umów rozmowę", "val": "#contact" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" }
+        {
+          "label": "Umów rozmowę",
+          "val": "#contact"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        }
       ],
       "quick_replies_en": [
-        { "label": "Book a call", "val": "#contact" },
-        { "label": "How does it work?", "val": "#how_it_works" }
+        {
+          "label": "Book a call",
+          "val": "#contact"
+        },
+        {
+          "label": "How does it work?",
+          "val": "#how_it_works"
+        }
       ]
     },
-
     {
       "id": "contact",
-      "keywords_pl": ["kontakt", "skontaktować", "napisać", "zadzwonić", "email", "mail", "spotkanie", "umówić", "rozmowa", "konsultacja", "pogadajmy", "porozmawiajmy", "chcę rozmawiać", "chcę się skontaktować", "jak się zgłosić", "formularz"],
-      "keywords_en": ["contact", "reach out", "email", "call", "meeting", "book", "schedule", "consultation", "talk", "get in touch", "let's talk", "contact form", "how to reach"],
+      "keywords_pl": [
+        "kontakt",
+        "skontaktować",
+        "napisać",
+        "zadzwonić",
+        "spotkanie",
+        "umówić",
+        "rozmowa",
+        "konsultacja",
+        "pogadajmy",
+        "porozmawiajmy",
+        "chcę rozmawiać",
+        "chcę się skontaktować",
+        "jak się zgłosić",
+        "formularz",
+        "chcę umówić",
+        "zainteresowany",
+        "chcę zacząć",
+        "chcę wdrożyć",
+        "chcę zamówić",
+        "chcę kupić",
+        "chcę porozmawiać",
+        "jestem zainteresowany",
+        "skontaktuj się ze mną",
+        "oddzwoń",
+        "jak mogę się zgłosić"
+      ],
+      "keywords_en": [
+        "contact",
+        "reach out",
+        "call",
+        "meeting",
+        "book",
+        "schedule",
+        "consultation",
+        "talk",
+        "get in touch",
+        "let's talk",
+        "contact form",
+        "how to reach",
+        "i'm interested",
+        "want to start",
+        "want to order",
+        "call me",
+        "get in contact",
+        "how do i apply"
+      ],
       "response_pl": "Możesz napisać bezpośrednio na <strong><a href='mailto:general@sofuture.ai'>general@sofuture.ai</a></strong> — odpowiadamy w ciągu 24h.\n\nNajszybciej: umów bezpłatną rozmowę discovery od razu w kalendarzu.",
       "response_en": "You can email us directly at <strong><a href='mailto:general@sofuture.ai'>general@sofuture.ai</a></strong> — we reply within 24h.\n\nFastest: book a free discovery call directly in our calendar.",
       "quick_replies_pl": [
-        { "label": "✉ Wyślij email", "val": "mailto:general@sofuture.ai" },
-        { "label": "Jak działa proces?", "val": "#how_it_works" }
+        {
+          "label": "✉ Wyślij email",
+          "val": "mailto:general@sofuture.ai"
+        },
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        }
       ],
       "quick_replies_en": [
-        { "label": "✉ Send email", "val": "mailto:general@sofuture.ai" },
-        { "label": "How does it work?", "val": "#how_it_works" }
+        {
+          "label": "✉ Send email",
+          "val": "mailto:general@sofuture.ai"
+        },
+        {
+          "label": "How does it work?",
+          "val": "#how_it_works"
+        }
       ]
     },
-
+    {
+      "id": "industries",
+      "keywords_pl": [
+        "branże",
+        "branża",
+        "jakie branże",
+        "dla kogo",
+        "dla jakiej branży",
+        "w jakiej branży",
+        "jakie firmy",
+        "dla jakich firm",
+        "jakie sektory",
+        "sektor",
+        "kto jest waszym klientem",
+        "kto korzysta",
+        "klientela",
+        "dla małych firm",
+        "dla dużych firm",
+        "dla startupu",
+        "dla korporacji",
+        "b2b",
+        "b2c",
+        "usługi dla firm",
+        "jakie przedsiębiorstwa",
+        "czy macie doświadczenie w",
+        "czy pracujecie z"
+      ],
+      "keywords_en": [
+        "industries",
+        "industry",
+        "which industries",
+        "who are your clients",
+        "who do you work with",
+        "what companies",
+        "what sectors",
+        "sector",
+        "small business",
+        "enterprise",
+        "startup",
+        "b2b",
+        "b2c",
+        "what businesses",
+        "do you work with",
+        "experience in",
+        "clients in"
+      ],
+      "response_pl": "Pracujemy z firmami z bardzo różnych branż — najważniejsze jest to, że masz powtarzalne procesy i chcesz je usprawnić.\n\n<strong>Przykłady firm z którymi pracujemy:</strong> agencje marketingowe, firmy e-commerce, kancelarie prawne i doradcze, firmy SaaS, deweloperzy, firmy produkcyjne, działy HR, startupy.\n\nJeśli Twoja firma zatrudnia powyżej 5 osób i traci czas na ręczne zadania — możemy pomóc.",
+      "response_en": "We work with companies across many industries — what matters is that you have repetitive processes and want to improve them.\n\n<strong>Examples of companies we work with:</strong> marketing agencies, e-commerce, law and advisory firms, SaaS, developers, manufacturing, HR departments, startups.\n\nIf your company has 5+ people and loses time on manual tasks — we can help.",
+      "quick_replies_pl": [
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Ile kosztuje?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Kontakt",
+          "val": "#contact"
+        }
+      ],
+      "quick_replies_en": [
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Pricing?",
+          "val": "#pricing"
+        },
+        {
+          "label": "Contact",
+          "val": "#contact"
+        }
+      ]
+    },
+    {
+      "id": "technology",
+      "keywords_pl": [
+        "technologia",
+        "technologie",
+        "stack",
+        "narzędzia",
+        "jakich narzędzi używacie",
+        "z czego korzystacie",
+        "openai",
+        "gpt",
+        "python",
+        "api",
+        "integracje",
+        "jakie api",
+        "z czym się integrujecie",
+        "integracje systemów",
+        "jakie systemy",
+        "kompatybilność",
+        "crm integracja",
+        "google workspace",
+        "microsoft 365",
+        "airtable",
+        "notion",
+        "slack",
+        "jira",
+        "asana",
+        "hubspot",
+        "salesforce",
+        "pipedrive"
+      ],
+      "keywords_en": [
+        "technology",
+        "tech stack",
+        "tools",
+        "what tools do you use",
+        "openai",
+        "gpt",
+        "python",
+        "api",
+        "integrations",
+        "which apis",
+        "what systems",
+        "compatibility",
+        "crm integration",
+        "google workspace",
+        "microsoft 365",
+        "airtable",
+        "notion",
+        "slack",
+        "jira",
+        "asana",
+        "hubspot",
+        "salesforce"
+      ],
+      "response_pl": "Używamy narzędzi które najlepiej pasują do konkretnego przypadku:\n\n<strong>Automatyzacje:</strong> Make.com, n8n, Zapier\n<strong>AI / LLM:</strong> OpenAI GPT-4, Claude, lokalne modele (Ollama)\n<strong>Dane:</strong> Airtable, Google Sheets, PostgreSQL, bazy wektorowe\n<strong>Integracje:</strong> HubSpot, Pipedrive, Salesforce, Notion, Slack, Jira, Google Workspace, Microsoft 365\n\nJeśli masz już swój stack — dostosujemy się do niego.",
+      "response_en": "We use the tools that best fit each specific case:\n\n<strong>Automations:</strong> Make.com, n8n, Zapier\n<strong>AI / LLM:</strong> OpenAI GPT-4, Claude, local models (Ollama)\n<strong>Data:</strong> Airtable, Google Sheets, PostgreSQL, vector databases\n<strong>Integrations:</strong> HubSpot, Pipedrive, Salesforce, Notion, Slack, Jira, Google Workspace, Microsoft 365\n\nIf you already have your own stack — we adapt to it.",
+      "quick_replies_pl": [
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Jakie usługi?",
+          "val": "#services"
+        },
+        {
+          "label": "Kontakt",
+          "val": "#contact"
+        }
+      ],
+      "quick_replies_en": [
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "What services?",
+          "val": "#services"
+        },
+        {
+          "label": "Contact",
+          "val": "#contact"
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "keywords_pl": [
+        "bezpieczeństwo",
+        "bezpieczeństwo danych",
+        "prywatność",
+        "rodo",
+        "gdpr",
+        "poufność",
+        "dane poufne",
+        "dane klientów",
+        "ochrona danych",
+        "bezpieczeństwo ai",
+        "czy dane są bezpieczne",
+        "co się dzieje z danymi",
+        "gdzie są dane",
+        "przechowywanie danych",
+        "serwery",
+        "lokalny model",
+        "on-premise",
+        "chmura",
+        "przetwarzanie danych"
+      ],
+      "keywords_en": [
+        "security",
+        "data security",
+        "privacy",
+        "gdpr",
+        "confidentiality",
+        "client data",
+        "data protection",
+        "ai security",
+        "is data safe",
+        "where is data stored",
+        "data storage",
+        "servers",
+        "local model",
+        "on-premise",
+        "cloud",
+        "data processing"
+      ],
+      "response_pl": "Bezpieczeństwo danych to priorytet:\n\n— Dla wrażliwych danych oferujemy <strong>lokalne modele AI</strong> (on-premise) — dane nie opuszczają Twojej infrastruktury\n— Wszystkie integracje korzystają z szyfrowanych połączeń\n— Pracujemy zgodnie z RODO\n— Możemy podpisać umowę powierzenia przetwarzania danych (DPA)\n\nJeśli masz szczególne wymagania — omówimy je na discovery call.",
+      "response_en": "Data security is a priority:\n\n— For sensitive data we offer <strong>local AI models</strong> (on-premise) — data never leaves your infrastructure\n— All integrations use encrypted connections\n— We work in compliance with GDPR\n— We can sign a Data Processing Agreement (DPA)\n\nIf you have specific requirements — we discuss them on the discovery call.",
+      "quick_replies_pl": [
+        {
+          "label": "Jak działa proces?",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Technologie",
+          "val": "#technology"
+        },
+        {
+          "label": "Kontakt",
+          "val": "#contact"
+        }
+      ],
+      "quick_replies_en": [
+        {
+          "label": "How it works",
+          "val": "#how_it_works"
+        },
+        {
+          "label": "Technology",
+          "val": "#technology"
+        },
+        {
+          "label": "Contact",
+          "val": "#contact"
+        }
+      ]
+    },
     {
       "id": "fallback",
       "keywords_pl": [],
       "keywords_en": [],
-      "response_pl": "Hmm, nie jestem pewien czy dobrze rozumiem. Mogę pomóc z informacjami o SoFuture, naszych usługach, procesie współpracy lub kontaktem.",
-      "response_en": "Hmm, I'm not sure I follow. I can help with info about SoFuture, our services, how we work, or getting in touch.",
+      "response_pl": "Hmm, nie jestem pewien czy dobrze rozumiem — możesz sprecyzować? Mogę pomóc z informacjami o SoFuture, naszych usługach, procesie współpracy lub kontaktem.",
+      "response_en": "Hmm, could you rephrase that? I can help with info about SoFuture, our services, how we work, or getting in touch.",
       "quick_replies_pl": [
-        { "label": "Co robicie?", "val": "#what_we_do" },
-        { "label": "Jakie usługi?", "val": "#services" },
-        { "label": "Kontakt", "val": "#contact" }
+        {
+          "label": "Co robicie?",
+          "val": "#what_we_do"
+        },
+        {
+          "label": "Jakie usługi?",
+          "val": "#services"
+        },
+        {
+          "label": "Kontakt",
+          "val": "#contact"
+        }
       ],
       "quick_replies_en": [
-        { "label": "What do you do?", "val": "#what_we_do" },
-        { "label": "What services?", "val": "#services" },
-        { "label": "Contact", "val": "#contact" }
+        {
+          "label": "What do you do?",
+          "val": "#what_we_do"
+        },
+        {
+          "label": "What services?",
+          "val": "#services"
+        },
+        {
+          "label": "Contact",
+          "val": "#contact"
+        }
       ]
     }
-
   ]
 }
