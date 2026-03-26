@@ -532,6 +532,29 @@
 
 <script>
 /* ═══════════════════════════════════════════
+   AUDIO
+═══════════════════════════════════════════ */
+let AC = null;
+function tryAudio() {
+  if (AC) return;
+  try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){}
+}
+function playAura() {
+  if (!AC) return;
+  [220, 277.18, 329.63, 415.3].forEach((hz, i) => {
+    const osc = AC.createOscillator();
+    const g   = AC.createGain();
+    osc.type = 'sine'; osc.frequency.value = hz;
+    g.gain.setValueAtTime(0, AC.currentTime);
+    g.gain.linearRampToValueAtTime(.028, AC.currentTime + .35 + i * .05);
+    g.gain.linearRampToValueAtTime(.015, AC.currentTime + 1.6);
+    g.gain.linearRampToValueAtTime(0,   AC.currentTime + 2.4);
+    osc.connect(g); g.connect(AC.destination);
+    osc.start(AC.currentTime + i * .06);
+    osc.stop(AC.currentTime + 2.6);
+  });
+}
+/* ═══════════════════════════════════════════
    PARTICLES  (per-particle timing)
 ═══════════════════════════════════════════ */
 const canvas = document.getElementById('pCanvas');
@@ -599,6 +622,7 @@ function revealUI() {
   logoEl.style.opacity    = '1';
   heroEl.style.transition = 'opacity 1.3s ease';
   heroEl.style.opacity    = '1';
+  tryAudio(); playAura();
   animDone = true;
   setTimeout(() => logoEl.classList.add('levitate'), 1400);
 }
