@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoFuture â€” The Future is Here.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:    #F4F6FA;
+      --navy:  #0C1E45;
+      --blue:  #1A6FD4;
+      --cyan:  #45C4EE;
+      --muted: #8A9BBD;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--navy);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* â”€â”€ PARTICLE CANVAS â”€â”€ */
+    #pCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 500;
+      background: var(--bg);
+      pointer-events: none;
+    }
+
+    /* â”€â”€ LOGO â”€â”€ */
+    #logo {
+      position: fixed;
+      top: 28px;
+      left: 36px;
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      opacity: 0;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #logo svg { width: 48px; height: 48px; overflow: visible; }
+
+    .logo-text { display: flex; flex-direction: column; gap: 3px; }
+
+    .logo-brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--navy);
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+
+    .logo-brand span { color: var(--blue); }
+
+    .logo-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: 0.32em;
+      color: var(--blue);
+      text-transform: uppercase;
+    }
+
+    /* Dot levitation â€” only when .levitate class is added */
+    @keyframes lev1 { 0%,100%{transform:translate(0,0)} 33%{transform:translate(.4px,-1.6px)} 66%{transform:translate(-.4px,.6px)} }
+    @keyframes lev2 { 0%,100%{transform:translate(0,0)} 25%{transform:translate(-1px,1px)} 75%{transform:translate(1px,-.5px)} }
+    @keyframes lev3 { 0%,100%{transform:translate(0,0)} 40%{transform:translate(.7px,1.2px)} 80%{transform:translate(-.7px,-1.2px)} }
+    @keyframes lev4 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-.9px,-1.4px)} }
+
+    #logo.levitate .d1 { animation: lev1 3.3s ease-in-out infinite; }
+    #logo.levitate .d2 { animation: lev2 2.9s ease-in-out infinite .5s; }
+    #logo.levitate .d3 { animation: lev3 3.6s ease-in-out infinite .2s; }
+    #logo.levitate .d4 { animation: lev4 2.7s ease-in-out infinite .9s; }
+
+    /* â”€â”€ HERO â”€â”€ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      opacity: 0;
+    }
+
+    .hero-tagline {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(10px, 1.1vw, 13px);
+      font-weight: 200;
+      letter-spacing: 0.35em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 192px;
+    }
+
+    /* â”€â”€ CHAT RING (420px, content inside) â”€â”€ */
+    #chatRing {
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      border: 1px solid rgba(69,196,238,.28);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      box-shadow:
+        0 0 60px rgba(69,196,238,.09),
+        0 0 120px rgba(26,111,212,.05);
+      animation: ringPulse 4s ease-in-out infinite;
+      cursor: text;
+    }
+
+    /* outer echo rings */
+    #chatRing::before {
+      content: '';
+      position: absolute;
+      inset: -14px;
+      border-radius: 50%;
+      border: 1px solid rgba(69,196,238,.1);
+      animation: ringPulse 4s ease-in-out infinite .8s;
+      pointer-events: none;
+    }
+
+    #chatRing::after {
+      content: '';
+      position: absolute;
+      inset: -28px;
+      border-radius: 50%;
+      border: 1px solid rgba(69,196,238,.05);
+      animation: ringPulse 4s ease-in-out infinite 1.4s;
+      pointer-events: none;
+    }
+
+    @keyframes ringPulse {
+      0%,100% { box-shadow: 0 0 60px rgba(69,196,238,.09), 0 0 120px rgba(26,111,212,.05); }
+      50%      { box-shadow: 0 0 80px rgba(69,196,238,.16), 0 0 160px rgba(26,111,212,.08); }
+    }
+
+    /* Idle dot â€” shown before first message */
+    #idleDot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      opacity: .5;
+      margin-bottom: 20px;
+      animation: dotPulse 2.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes dotPulse {
+      0%,100% { opacity:.3; transform:scale(1); }
+      50%      { opacity:.9; transform:scale(1.5); }
+    }
+
+    /* Chat messages */
+    #chatMsgs {
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 16px;
+      scrollbar-width: none;
+    }
+    #chatMsgs::-webkit-scrollbar { display: none; }
+
+    .bubble {
+      padding: 9px 13px;
+      border-radius: 12px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      max-width: 88%;
+      animation: fadeUp .3s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(6px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .bubble.bot {
+      background: var(--white);
+      color: var(--navy);
+      border: 1px solid rgba(12,30,69,.07);
+      box-shadow: 0 2px 12px rgba(0,0,0,.04);
+      align-self: flex-start;
+    }
+
+    .bubble.user {
+      background: var(--navy);
+      color: rgba(255,255,255,.9);
+      align-self: flex-end;
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
+    }
+
+    .qr-btn {
+      padding: 4px 11px;
+      border: 1px solid rgba(26,111,212,.3);
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5px;
+      font-weight: 300;
+      color: var(--blue);
+      background: transparent;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+    .qr-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    /* Input row */
+    .input-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(12,30,69,.14);
+      padding-bottom: 8px;
+      transition: border-color .25s;
+    }
+    .input-row:focus-within { border-color: var(--blue); }
+
+    #chatInput {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 12.5px;
+      font-weight: 300;
+      color: var(--navy);
+      outline: none;
+      caret-color: var(--blue);
+      text-align: center;
+      transition: text-align .3s;
+    }
+    #chatInput.active { text-align: left; }
+    #chatInput::placeholder { color: var(--muted); }
+
+    #sendBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--blue);
+      opacity: .4;
+      transition: opacity .2s;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      flex-shrink: 0;
+    }
+    #sendBtn:hover { opacity: 1; }
+
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      color: var(--muted);
+      animation: scrollDrop 2.4s ease-in-out infinite;
+      opacity: .6;
+    }
+
+    .scroll-cue span {
+      font-size: 9px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      font-weight: 200;
+    }
+
+    @keyframes scrollDrop {
+      0%,100%{ transform:translateX(-50%) translateY(0); opacity:.4; }
+      50%{ transform:translateX(-50%) translateY(7px); opacity:.8; }
+    }
+
+    /* â”€â”€ SERVICES â”€â”€ */
+    #services {
+      background: var(--white);
+      padding: 110px 48px 120px;
+    }
+
+    .sec-head {
+      text-align: center;
+      padding-bottom: 80px;
+    }
+
+    .sec-head h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(30px, 3.5vw, 46px);
+      font-weight: 400;
+      color: var(--navy);
+      letter-spacing: .03em;
+      margin-bottom: 12px;
+    }
+
+    .sec-head p {
+      font-size: 11.5px;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    /* Stream layout */
+    .stream {
+      max-width: 1020px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 44px;
+    }
+
+    /* Card */
+    .sof-card {
+      width: 76%;
+      min-height: 130px;
+      background: #fff;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 44px;
+      padding: 28px 32px;
+      box-shadow: 0 2px 20px rgba(12,30,69,.055);
+      border: 1px solid rgba(12,30,69,.055);
+      transition: transform .28s ease, box-shadow .28s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sof-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--accent);
+      border-radius: 20px 0 0 20px;
+      opacity: .7;
+    }
+
+    .sof-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(12,30,69,.1);
+    }
+
+    .sof-illus {
+      width: 88px;
+      height: 88px;
+      flex-shrink: 0;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .sof-illus svg { width: 72px; height: 72px; }
+
+    .sof-text { flex: 1; min-width: 0; }
+
+    .sof-tag {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      opacity: .9;
+    }
+
+    .sof-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 7px;
+    }
+
+    .sof-desc {
+      font-size: 12.5px;
+      color: #56688A;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    @media (max-width: 700px) {
+      .sof-card { width: 100% !important; margin-left: 0 !important; flex-direction: column; align-items: flex-start; gap: 18px; }
+      #services { padding: 70px 24px 80px; }
+    }
+
+    @media (max-width: 500px) {
+      .sof-illus { width: 64px; height: 64px; border-radius: 14px; }
+      .sof-illus svg { width: 52px; height: 52px; }
+      #services { padding: 60px 16px 70px; }
+      #chatRing { width: min(340px, 90vw); height: min(340px, 90vw); padding: 36px; }
+    }
+
+    /* â”€â”€ FOOTER â”€â”€ */
+    footer {
+      background: var(--navy);
+      padding: 44px 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    @media (max-width: 540px) {
+      footer { padding: 36px 24px; flex-direction: column; text-align: center; }
+    }
+
+    .ft-brand {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: rgba(255,255,255,.85);
+      letter-spacing: .04em;
+    }
+
+    .ft-info {
+      text-align: right;
+      font-size: 10.5px;
+      font-weight: 200;
+      color: rgba(255,255,255,.35);
+      letter-spacing: .1em;
+      line-height: 2;
+    }
+    @media (max-width: 540px) { .ft-info { text-align: center; } }
+
+    .ft-info a {
+      color: rgba(255,255,255,.55);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .ft-info a:hover { color: var(--cyan); }
+  </style>
+</head>
+<body>
+
+<!-- PARTICLE CANVAS -->
+<canvas id="pCanvas"></canvas>
+
+<!-- LOGO -->
+<a id="logo" href="#hero" aria-label="SoFuture">
+  <svg viewBox="0 0 48 48" fill="none">
+    <circle class="d1" cx="15" cy="15" r="8"   fill="#0C1E45" opacity=".88"/>
+    <circle class="d2" cx="34" cy="10" r="5"   fill="#45C4EE" opacity=".9"/>
+    <circle class="d3" cx="10" cy="34" r="6.5" fill="#1A6FD4" opacity=".82"/>
+    <circle class="d4" cx="32" cy="32" r="5.5" fill="#45C4EE" opacity=".78"/>
+  </svg>
+  <div class="logo-text">
+    <span class="logo-brand">so<span>F</span>uture</span>
+    <span class="logo-sub">Intelligence</span>
+  </div>
+</a>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-tagline">The Future is Here.</p>
+
+  <div id="chatRing">
+    <div id="idleDot"></div>
+    <div id="chatMsgs"></div>
+    <div class="input-row">
+      <input id="chatInput" type="text"
+        placeholder="What can I do for you?"
+        autocomplete="off" spellcheck="false" />
+      <button id="sendBtn" aria-label="Send">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <svg width="11" height="18" viewBox="0 0 11 22" fill="none">
+      <path d="M5.5 1v16M1 13l4.5 5 4.5-5"
+        stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-head">
+    <h2>What We Build</h2>
+    <p>Tailored solutions &mdash; real results</p>
+  </div>
+  <div class="stream" id="stream"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-brand">soFuture</div>
+  <div class="ft-info">
+    <a href="mailto:general@sofuture.ai">general@sofuture.ai</a><br>
+    sofuture.ai
+  </div>
+</footer>
+
+<script>
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   PARTICLES  (per-particle timing)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•€€¨¼)½¹ÍĞ…¹Ù…Ì€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% Á…¹Ù…Ìœ¤ì)½¹ÍĞÑà€€€€ô…¹Ù…Ì¹•Ñ½¹Ñ•áĞ œÉœ¤ì)½¹ÍĞ±½½°€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% ±½¼œ¤ì)½¹ÍĞ¡•É½°€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% ¡•É¼œ¤ì()±•Ğ\° °ÁÑÌ€ômt°¥¹ÑÉ½QÌ€ô¹Õ±°°…¹¥µ½¹”€ô™…±Í”°½¹ÙMÑ…ÉÑ•€ô™…±Í”ì()½¹ÍĞQIQL€ôl(€ìÁàè€ÌØ¬ÄÔ°Áäè€Èà¬ÄÔ°Èè€à°€€ŒèlÄÈ°€€ÌÀ°€€Øåt°€¸è€ÈÈÀô°(€ìÁàè€ÌØ¬ÌĞ°Áäè€Èà¬ÄÀ°Èè€Ô°€€ŒèlØä°€ÄäØ°€ÈÌát°€¸è€ÄÈÀô°(€ìÁàè€ÌØ¬ÄÀ°Áäè€Èà¬ÌĞ°Èè€Ø¸Ô°ŒèlÈØ°€ÄÄÄ°€ÈÄÉt°€¸è€ÄÜÀô°(€ìÁàè€ÌØ¬ÌÈ°Áäè€Èà¬ÌÈ°Èè€Ô¸Ô°ŒèlØä°€ÄäØ°€ÈÌát°€¸è€ÄĞÀô°)tì()™Õ¹Ñ¥½¸É•Í¥é” ¤ì(€\€ô…¹Ù…Ì¹İ¥‘Ñ €€ôİ¥¹‘½Ü¹¥¹¹•É]¥‘Ñ ì(€ €ô…¹Ù…Ì¹¡•¥¡Ğ€ôİ¥¹‘½Ü¹¥¹¹•É!•¥¡Ğì)ô()™Õ¹Ñ¥½¸‰Õ¥±‘A…ÉÑ¥±•Ì ¤ì(€ÁÑÌ€ômtì(€QIQL¹™½É… ¡Ğ€ôøì(€€€™½È€¡±•Ğ¤€ô€Àì¤€ğĞ¹¸ì¤¬¬¤ì(€€€€€½¹ÍĞ„€€€ô5…Ñ ¹É…¹‘½´ ¤€¨5…Ñ ¹A$€¨€Èì(€€€€€½¹ÍĞÉ…€ô5…Ñ ¹É…¹‘½´ ¤€¨Ğ¹È€¨€¸àÔì(€€€€€ÁÑÌ¹ÁÕÍ ¡ì(€€€€€€€àè€5…Ñ ¹É…¹‘½´ ¤€¨\°(€€€€€€€äè€5…Ñ ¹É…¹‘½´ ¤€¨ °(€€€€€€€½àè€À°½äè€À°(€€€€€€€ÑàèĞ¹Áà€¬5…Ñ ¹½Ì¡„¤€¨É…°(€€€€€€€ÑäèĞ¹Áä€¬5…Ñ ¹Í¥¸¡„¤€¨É…°(€€€€€€€Ùàè€¡5…Ñ ¹É…¹‘½´ ¤€´€¸Ô¤€¨€¸Ô°(€€€€€€€Ùäè€¡5…Ñ ¹É…¹‘½´ ¤€´€¸Ô¤€¨€¸Ô°(€€€€€€€Èè€5…Ñ ¹É…¹‘½´ ¤€¨€Ä¸Ğ€¬€¸Ì°(€€€€€€€Œè€Ğ¹Œ°(€€€€€€€…±Á¡„è5…Ñ ¹É…¹‘½´ ¤€¨€¸Ğ€¬€¸ÈÔ°(€€€€€€€Á•±…äè5…Ñ ¹É…¹‘½´ ¤€¨€ÄĞÀÀ°(€€€€€€€ÁÕÈè€€5…Ñ ¹É…¹‘½´ ¤€¨€ÄÈÀÀ€¬€ÜÀÀ°(€€€€€ô¤ì(€€€ô(€ô¤ì)ô()™Õ¹Ñ¥½¸•¥¼¡Ğ¤ìÉ•ÑÕÉ¸Ğ€ğ€¸Ô€ü€È©Ğ©Ğ€è€´Ä¬ Ğ´È©Ğ¤©Ğìô)™Õ¹Ñ¥½¸±•ÉÀ¡„°ˆ°Ğ¤ìÉ•ÑÕÉ¸„€¬€¡ˆ€´„¤€¨Ğìô()½¹ÍĞ1=Q}9€ô€ÔÀÀì)½¹ÍĞ=9Y}9  = FLOAT_END + 1400 + 1900 + 150;
+
+function drawDot(x, y, r, c, a) {
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  ctx.fill();
+}
+
+function revealUI() {
+  /* freeze final frame then crossfade: canvas out, logo+hero in */
+  pts.forEach(p => drawDot(p.tx, p.ty, p.r, p.c, p.alpha));
+  canvas.style.transition = 'opacity 1.3s ease';
+  canvas.style.opacity    = '0';
+  logoEl.style.transition = 'opacity 1.3s ease';
+  logoEl.style.opacity    = '1';
+  heroEl.style.transition = 'opacity 1.3s ease';
+  heroEl.style.opacity    = '1';
+  animDone = true;
+  setTimeout(() => logoEl.classList.add('levitate'), 1400);
+}
+
+function frame(now) {
+  if (animDone) return;
+  const t = now - introTs;
+  ctx.clearRect(0, 0, W, H);
+
+  if (t < FLOAT_END) {
+    /* â”€â”€ FLOAT: brownian drift â”€â”€ */
+    pts.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      p.vx += (Math.random() - .5) * .018;
+      p.vy += (Math.random() - .5) * .018;
+      p.vx *= .985; p.vy *= .985;
+      drawDot(p.x, p.y, p.r, p.c, p.alpha);
+    });
+
+  } else if (t < CONV_END) {
+    /* â”€â”€ CONVERGE: each particle on its own schedule â”€â”€ */
+    if (!convStarted) {
+      convStarted = true;
+      pts.forEach(p => { p.ox = p.x; p.oy = p.y; });
+    }
+
+    let allArrived = true;
+    pts.forEach(p => {
+      const rel = t - FLOAT_END - p.pDelay;
+      const q   = rel <= 0 ? 0 : eio(Math.min(rel / p.pDur, 1));
+      if (q < 0.96) allArrived = false;
+      p.x = lerp(p.ox, p.tx, q);
+      p.y = lerp(p.oy, p.ty, q);
+      drawDot(p.x, p.y, p.r, p.c, p.alpha);
+    });
+
+    if (allArrived) { revealUI(); return; }
+
+  } else {
+    revealUI(); return;
+  }
+
+  requestAnimationFrame(frame);
+}
+
+function startIntro() {
+  convStarted = false;
+  animDone    = false;
+  resize();
+  buildParticles();
+  introTs = performance.now();
+  requestAnimationFrame(frame);
+}
+
+window.addEventListener('resize', resize);
+setTimeout(startIntro, 400);
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   SERVICES
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+const SERVICES = [
+  {
+    tag: 'AI Agents',
+    title: 'Your Own AI Specialist',
+    desc: 'A dedicated AI expert in any field â€” law, finance, HR, compliance â€” available 24/7, trained on your data, running on your infrastructure.',
+    accent: '#7C3AED', bg: '#F5F0FF',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="50%" cy="40%" r="55%"><stop offset="0%" stop-color="#C4B5FD"/><stop offset="100%" stop-color="#7C3AED" stop-opacity=".15"/></radialGradient></defs><circle cx="36" cy="34" r="26" fill="url(#g${id})"/><circle cx="36" cy="20" r="5" fill="#7C3AED" opacity=".9"/><circle cx="22" cy="38" r="4" fill="#A78BFA" opacity=".85"/><circle cx="50" cy="38" r="4" fill="#A78BFA" opacity=".85"/><circle cx="28" cy="52" r="3.5" fill="#7C3AED" opacity=".7"/><circle cx="44" cy="52" r="3.5" fill="#7C3AED" opacity=".7"/><line x1="36" y1="25" x2="22" y2="34" stroke="#7C3AED" stroke-width="1.4" opacity=".4"/><line x1="36" y1="25" x2="50" y2="34" stroke="#7C3AED" stroke-width="1.4" opacity=".4"/><line x1="22" y1="42" x2="28" y2="48" stroke="#A78BFA" stroke-width="1.2" opacity=".4"/><line x1="50" y1="42" x2="44" y2="48" stroke="#A78BFA" stroke-width="1.2" opacity=".4"/><line x1="22" y1="38" x2="50" y2="38" stroke="#7C3AED" stroke-width="1" opacity=".2"/><circle cx="36" cy="20" r="2.5" fill="#fff" opacity=".7"/></svg>`
+  },
+  {
+    tag: 'Customer Experience',
+    title: 'AI Customer Service Agent',
+    desc: 'Handles inquiries, complaints, and support tickets automatically â€” in any language, at any hour, without a single missed message.',
+    accent: '#059669', bg: '#EDFAF5',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="40%" cy="45%" r="55%"><stop offset="0%" stop-color="#6EE7B7"/><stop offset="100%" stop-color="#059669" stop-opacity=".1"/></radialGradient></defs><ellipse cx="36" cy="36" rx="28" ry="26" fill="url(#g${id})"/><rect x="14" y="18" width="34" height="22" rx="8" fill="#059669" opacity=".85"/><path d="M22 40 L18 48 L30 42" fill="#059669" opacity=".85"/><circle cx="24" cy="29" r="2.5" fill="#fff" opacity=".9"/><circle cx="31" cy="29" r="2.5" fill="#fff" opacity=".9"/><circle cx="38" cy="29" r="2.5" fill="#fff" opacity=".9"/><rect x="28" y="34" width="26" height="16" rx="6" fill="#34D399" opacity=".6"/><circle cx="37" cy="42" r="2" fill="#fff" opacity=".7"/><circle cx="43" cy="42" r="2" fill="#fff" opacity=".7"/></svg>`
+  },
+  {
+    tag: 'Sales & Growth',
+    title: 'AI Sales Agent',
+    desc: 'Qualifies leads, follows up with prospects, and supports your sales team â€” so no opportunity slips through the cracks.',
+    accent: '#D97706', bg: '#FFFBEB',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><linearGradient id="g${id}" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FDE68A"/><stop offset="100%" stop-color="#F59E0B" stop-opacity=".25"/></linearGradient><linearGradient id="b${id}" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#F59E0B"/><stop offset="100%" stop-color="#FCD34D"/></linearGradient></defs><circle cx="36" cy="36" r="28" fill="url(#g${id})"/><rect x="16" y="44" width="8" height="12" rx="3" fill="url(#b${id})" opacity=".5"/><rect x="28" y="36" width="8" height="20" rx="3" fill="url(#b${id})" opacity=".7"/><rect x="40" y="26" width="8" height="30" rx="3" fill="url(#b${id})" opacity=".9"/><polyline points="20,42 32,32 44,22 56,16" stroke="#D97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="56" cy="16" r="4" fill="#D97706"/><circle cx="56" cy="16" r="2" fill="#fff"/></svg>`
+  },
+  {
+    tag: 'Human Resources',
+    title: 'HR & Recruitment Agent',
+    desc: 'Screens CVs, schedules interviews, and onboards new employees â€” cutting weeks of manual work down to hours.',
+    accent: '#DB2777', bg: '#FDF2F8',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="50%" cy="45%" r="55%"><stop offset="0%" stop-color="#FBCFE8"/><stop offset="100%" stop-color="#DB2777" stop-opacity=".1"/></radialGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><circle cx="36" cy="26" r="7" fill="#DB2777" opacity=".85"/><path d="M22 50c0-7.7 6.3-14 14-14s14 6.3 14 14" fill="#DB2777" opacity=".85"/><circle cx="18" cy="32" r="5" fill="#F9A8D4" opacity=".8"/><path d="M8 50c0-5.5 4.5-10 10-10" stroke="#F9A8D4" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/><circle cx="54" cy="32" r="5" fill="#F9A8D4" opacity=".8"/><path d="M64 50c0-5.5-4.5-10-10-10" stroke="#F9A8D4" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/><path d="M23 36 Q36 28 49 36" stroke="#DB2777" stroke-width="1.2" fill="none" stroke-dasharray="3 2" opacity=".35"/></svg>`
+  },
+  {
+    tag: 'Knowledge Management',
+    title: 'Internal Knowledge Base',
+    desc: 'Your entire company knowledge â€” documents, procedures, manuals â€” accessible in seconds through a simple conversation.',
+    accent: '#2563EB', bg: '#EFF6FF',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><linearGradient id="g${id}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#BFDBFE"/><stop offset="100%" stop-color="#2563EB" stop-opacity=".15"/></linearGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><rect x="20" y="24" width="26" height="32" rx="4" fill="#93C5FD" opacity=".5"/><rect x="17" y="21" width="26" height="32" rx="4" fill="#60A5FA" opacity=".6"/><rect x="14" y="18" width="26" height="32" rx="4" fill="#2563EB" opacity=".8"/><line x1="20" y1="27" x2="34" y2="27" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".8"/><line x1="20" y1="32" x2="34" y2="32" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".6"/><line x1="20" y1="37" x2="30" y2="37" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".4"/><circle cx="48" cy="48" r="11" fill="#fff"/><circle cx="46" cy="46" r="5" stroke="#2563EB" stroke-width="2" fill="none"/><line x1="50" y1="50" x2="54" y2="54" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/></svg>`
+  },
+  {
+    tag: 'Document Automation',
+    title: 'Contracts & Documents',
+    desc: 'Automatically generate contracts, proposals, and reports from templates â€” accurate, fast, and always on-brand.',
+    accent: '#0D9488', bg: '#F0FDFA',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><linearGradient id="g${id}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#99F6E4"/><stop offset="100%" stop-color="#0D9488" stop-opacity=".15"/></linearGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><rect x="20" y="14" width="28" height="38" rx="4" fill="#0D9488" opacity=".8"/><path d="M40 14 L48 22 L40 22 Z" fill="#fff" opacity=".3"/><path d="M40 14 L40 22 L48 22" fill="none" stroke="#0D9488" stroke-width="1.2"/><line x1="26" y1="28" x2="42" y2="28" stroke="#fff" stroke-width="1.5" opacity=".8" stroke-linecap="round"/><line x1="26" y1="33" x2="42" y2="33" stroke="#fff" stroke-width="1.5" opacity=".6" stroke-linecap="round"/><line x1="26" y1="38" x2="36" y2="38" stroke="#fff" stroke-width="1.5" opacity=".4" stroke-linecap="round"/><circle cx="50" cy="50" r="10" fill="#14B8A6"/><polyline points="45,50 48,53 55,46" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+  },
+  {
+    tag: 'Data & Analytics',
+    title: 'Data Analysis & Reporting',
+    desc: 'Connect your data sources and receive automatic reports, insights, and alerts â€” without touching a spreadsheet.',
+    accent: '#4F46E5', bg: '#EEF2FF',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#C7D2FE"/><stop offset="100%" stop-color="#4F46E5" stop-opacity=".1"/></radialGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><circle cx="36" cy="36" r="18" fill="none" stroke="#E0E7FF" stroke-width="8"/><circle cx="36" cy="36" r="18" fill="none" stroke="#4F46E5" stroke-width="8" stroke-dasharray="45 113" stroke-dashoffset="28" stroke-linecap="round"/><circle cx="36" cy="36" r="18" fill="none" stroke="#818CF8" stroke-width="8" stroke-dasharray="28 113" stroke-dashoffset="-17" stroke-linecap="round"/><circle cx="36" cy="36" r="18" fill="none" stroke="#A5B4FC" stroke-width="8" stroke-dasharray="23 113" stroke-dashoffset="-45" stroke-linecap="round"/><circle cx="36" cy="36" r="10" fill="#fff"/><circle cx="36" cy="36" r="4" fill="#4F46E5" opacity=".6"/></svg>`
+  },
+  {
+    tag: 'Process Automation',
+    title: 'Workflow Automation',
+    desc: 'Eliminate manual data transfer between your tools. What used to take hours now happens in the background, instantly.',
+    accent: '#EA580C', bg: '#FFF7ED',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#FED7AA"/><stop offset="100%" stop-color="#EA580C" stop-opacity=".1"/></radialGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><circle cx="16" cy="36" r="8" fill="#EA580C" opacity=".75"/><circle cx="16" cy="36" r="4" fill="#fff" opacity=".9"/><circle cx="36" cy="36" r="10" fill="#EA580C" opacity=".9"/><circle cx="36" cy="36" r="5" fill="#fff" opacity=".9"/><circle cx="56" cy="36" r="8" fill="#EA580C" opacity=".75"/><circle cx="56" cy="36" r="4" fill="#fff" opacity=".9"/><line x1="24" y1="36" x2="26" y2="36" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity=".5"/><line x1="46" y1="36" x2="48" y2="36" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity=".5"/><polyline points="23,32 27,36 23,40" stroke="#EA580C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".7"/><polyline points="45,32 49,36 45,40" stroke="#EA580C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".7"/><circle cx="36" cy="22" r="3" fill="#FB923C" opacity=".5"/><circle cx="36" cy="50" r="3" fill="#FB923C" opacity=".5"/></svg>`
+  },
+  {
+    tag: 'Marketing',
+    title: 'Social Media Automation',
+    desc: 'From content creation to scheduling and publishing â€” your social presence runs itself while you focus on the business.',
+    accent: '#E11D48', bg: '#FFF1F2',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#FECDD3"/><stop offset="100%" stop-color="#E11D48" stop-opacity=".1"/></radialGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><circle cx="36" cy="18" r="7" fill="#E11D48" opacity=".9"/><circle cx="18" cy="44" r="6" fill="#FB7185" opacity=".8"/><circle cx="54" cy="44" r="6" fill="#FB7185" opacity=".8"/><circle cx="26" cy="58" r="4.5" fill="#FCA5A5" opacity=".7"/><circle cx="46" cy="58" r="4.5" fill="#FCA5A5" opacity=".7"/><line x1="36" y1="25" x2="21" y2="39" stroke="#E11D48" stroke-width="1.5" opacity=".3"/><line x1="36" y1="25" x2="51" y2="39" stroke="#E11D48" stroke-width="1.5" opacity=".3"/><line x1="21" y1="49" x2="28" y2="54" stroke="#FB7185" stroke-width="1.2" opacity=".3"/><line x1="51" y1="49" x2="44" y2="54" stroke="#FB7185" stroke-width="1.2" opacity=".3"/><circle cx="36" cy="18" r="3" fill="#fff" opacity=".7"/><circle cx="52" cy="20" r="8" fill="#fff"/><text x="52" y="24" text-anchor="middle" font-size="10" fill="#E11D48">â™¥</text></svg>`
+  },
+  {
+    tag: 'E-Commerce',
+    title: 'Online Store Automation',
+    desc: 'Automate order processing, inventory updates, customer notifications, and returns â€” at any scale.',
+    accent: '#0891B2', bg: '#ECFEFF',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><linearGradient id="g${id}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#A5F3FC"/><stop offset="100%" stop-color="#0891B2" stop-opacity=".15"/></linearGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><rect x="18" y="30" width="32" height="24" rx="4" fill="#0891B2" opacity=".8"/><path d="M16 30 L34 22 L56 30" fill="#22D3EE" opacity=".7"/><path d="M16 30 L56 30" stroke="#0891B2" stroke-width="1.2" opacity=".4"/><line x1="34" y1="22" x2="34" y2="54" stroke="#fff" stroke-width="1.5" opacity=".5"/><line x1="18" y1="30" x2="50" y2="30" stroke="#fff" stroke-width="1.5" opacity=".3"/><circle cx="52" cy="22" r="9" fill="#fff"/><polyline points="47,25 52,19 57,25" stroke="#0891B2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="52" y1="19" x2="52" y2="27" stroke="#0891B2" stroke-width="2" stroke-linecap="round"/></svg>`
+  },
+  {
+    tag: 'Office Automation',
+    title: 'AI Receptionist & Secretary',
+    desc: 'Answers calls, books meetings, and manages your calendar â€” a full-time assistant that never takes a day off.',
+    accent: '#047857', bg: '#ECFDF5',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="45%" cy="45%" r="55%"><stop offset="0%" stop-color="#A7F3D0"/><stop offset="100%" stop-color="#047857" stop-opacity=".1"/></radialGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><rect x="16" y="20" width="32" height="30" rx="6" fill="#047857" opacity=".8"/><rect x="16" y="20" width="32" height="10" rx="6" fill="#065F46" opacity=".9"/><rect x="16" y="26" width="32" height="4" fill="#065F46" opacity=".9"/><rect x="24" y="16" width="3" height="8" rx="1.5" fill="#34D399"/><rect x="45" y="16" width="3" height="8" rx="1.5" fill="#34D399"/><circle cx="25" cy="38" r="2.5" fill="#fff" opacity=".9"/><circle cx="33" cy="38" r="2.5" fill="#fff" opacity=".9"/><circle cx="41" cy="38" r="2.5" fill="#fff" opacity=".5"/><circle cx="25" cy="45" r="2.5" fill="#fff" opacity=".5"/><circle cx="33" cy="45" r="2.5" fill="#10B981" opacity=".9"/><circle cx="54" cy="52" r="10" fill="#34D399"/><path d="M50 48.5c0-.3.1-.5.3-.7l2.1-2.1c.3-.3.8-.3 1.1 0l1.7 1.7c.3.3.3.8 0 1.1l-.9.9c.5 1 1.1 1.9 1.9 2.7.8.8 1.7 1.4 2.7 1.9l.9-.9c.3-.3.8-.3 1.1 0l1.7 1.7c.3.3.3.8 0 1.1l-2.1 2.1c-.2.2-.4.3-.7.3-5.5 0-9.8-4.3-9.8-9.8z" fill="#fff" transform="translate(-2,-2) scale(.85)"/></svg>`
+  },
+  {
+    tag: 'Finance',
+    title: 'Invoice & Finance Automation',
+    desc: 'Auto-process invoices, send payment reminders, and generate financial summaries â€” with zero manual input.',
+    accent: '#B45309', bg: '#FFFBEB',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#FDE68A"/><stop offset="100%" stop-color="#B45309" stop-opacity=".15"/></radialGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><circle cx="34" cy="36" r="20" fill="#D97706" opacity=".75"/><circle cx="34" cy="36" r="16" fill="#F59E0B" opacity=".8"/><circle cx="34" cy="36" r="12" fill="#FCD34D" opacity=".8"/><text x="34" y="41" text-anchor="middle" font-family="serif" font-size="16" font-weight="bold" fill="#92400E" opacity=".8">$</text><circle cx="56" cy="20" r="3.5" fill="#FBBF24" opacity=".8"/><line x1="56" y1="14" x2="56" y2="26" stroke="#FBBF24" stroke-width="1.2" opacity=".5"/><line x1="50" y1="20" x2="62" y2="20" stroke="#FBBF24" stroke-width="1.2" opacity=".5"/></svg>`
+  },
+  {
+    tag: 'Communication',
+    title: 'Email Automation',
+    desc: 'Smart sorting, auto-responses, and follow-up sequences â€” your inbox organised and working for you, not against you.',
+    accent: '#1D4ED8', bg: '#EFF6FF',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><linearGradient id="g${id}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#BFDBFE"/><stop offset="100%" stop-color="#1D4ED8" stop-opacity=".15"/></linearGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><rect x="14" y="24" width="38" height="28" rx="5" fill="#1D4ED8" opacity=".8"/><polyline points="14,24 33,38 52,24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/><line x1="14" y1="52" x2="26" y2="40" stroke="#fff" stroke-width="1.2" opacity=".3"/><line x1="52" y1="52" x2="40" y2="40" stroke="#fff" stroke-width="1.2" opacity=".3"/><circle cx="54" cy="22" r="9" fill="#3B82F6"/><polyline points="57,16 53,22 56,22 52,28" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+  },
+  {
+    tag: 'Scheduling',
+    title: 'Calendar & Scheduling',
+    desc: 'Let clients book meetings automatically, sync across your team, and eliminate back-and-forth emails forever.',
+    accent: '#6D28D9', bg: '#F5F3FF',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="50%" cy="45%" r="55%"><stop offset="0%" stop-color="#DDD6FE"/><stop offset="100%" stop-color="#6D28D9" stop-opacity=".1"/></radialGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><circle cx="36" cy="36" r="14" fill="#fff" opacity=".9"/><line x1="36" y1="36" x2="36" y2="26" stroke="#6D28D9" stroke-width="2.5" stroke-linecap="round"/><line x1="36" y1="36" x2="44" y2="39" stroke="#6D28D9" stroke-width="2" stroke-linecap="round"/><circle cx="36" cy="36" r="2.5" fill="#6D28D9"/><rect x="24" y="14" width="3" height="7" rx="1.5" fill="#8B5CF6"/><rect x="45" y="14" width="3" height="7" rx="1.5" fill="#8B5CF6"/><circle cx="54" cy="52" r="9" fill="#7C3AED"/><polyline points="50,52 53,55 59,48" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+  },
+  {
+    tag: 'Business Intelligence',
+    title: 'News & Market Monitoring',
+    desc: 'Daily briefings on your industry, competitors, and key trends â€” delivered automatically, every morning.',
+    accent: '#334155', bg: '#F1F5F9',
+    illus: id => `<svg viewBox="0 0 72 72" fill="none"><defs><radialGradient id="g${id}" cx="50%" cy="50%" r="55%"><stop offset="0%" stop-color="#CBD5E1"/><stop offset="100%" stop-color="#334155" stop-opacity=".1"/></radialGradient></defs><circle cx="36" cy="36" r="27" fill="url(#g${id})"/><circle cx="34" cy="36" r="18" fill="none" stroke="#475569" stroke-width="2" opacity=".6"/><ellipse cx="34" cy="36" rx="8" ry="18" fill="none" stroke="#475569" stroke-width="1.5" opacity=".4"/><line x1="16" y1="36" x2="52" y2="36" stroke="#475569" stroke-width="1.5" opacity=".4"/><path d="M18 27 Q34 22 50 27" fill="none" stroke="#475569" stroke-width="1.2" opacity=".3"/><path d="M18 45 Q34 50 50 45" fill="none" stroke="#475569" stroke-width="1.2" opacity=".3"/><circle cx="52" cy="22" r="10" fill="#fff"/><circle cx="50" cy="20" r="5.5" stroke="#334155" stroke-width="2" fill="none"/><line x1="54" y1="24" x2="58" y2="28" stroke="#334155" stroke-width="2.5" stroke-linecap="round"/><circle cx="34" cy="36" r="3" fill="#475569" opacity=".6"/></svg>`
+  },
+];
+
+const OFFSETS = [0, 22];
+const streamEl = document.getElementById('stream');
+
+SERVICES.forEach((s, i) => {
+  const card = document.createElement('div');
+  card.className = 'sof-card';
+  card.style.setProperty('--accent', s.accent);
+  card.style.marginLeft = OFFSETS[i % 2] + '%';
+  card.innerHTML = `
+    <div class="sof-illus" style="background:${s.bg}">${s.illus(i)}</div>
+    <div class="sof-text">
+      <div class="sof-tag" style="color:${s.accent}">${s.tag}</div>
+      <div class="sof-title">${s.title}</div>
+      <div class="sof-desc">${s.desc}</div>
+    </div>`;
+  streamEl.appendChild(card);
+});
+
+/* scroll reveal */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity    = '1';
+      e.target.style.transform  = 'translateY(0)';
+    }
+  });
+}, { threshold: .06 });
+
+document.querySelectorAll('.sof-card').forEach((el, i) => {
+  el.style.opacity   = '0';
+  el.style.transform = 'translateY(14px)';
+  el.style.transition = `opacity .5s ease ${i * .04}s, transform .5s ease ${i * .04}s, box-shadow .28s`;
+  io.observe(el);
+});
+
+const msgsEl  = document.getElementById('chatMsgs');
+const inputEl = document.getElementById('chatInput');
+const sendEl  = document.getElementById('sendBtn'ŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠVCŠV@€¨¼)½¹ÍĞµÍÍ°€€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% ¡…Ñ5ÍÌœ¤ì)½¹ÍĞ¥¹ÁÕÑ°€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% ¡…Ñ%¹ÁÕĞœ¤ì)½¹ÍĞÍ•¹‘°€€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% Í•¹‘	Ñ¸œ¤ì)½¹ÍĞÉ¥¹°€€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% ¡…ÑI¥¹œœ¤ì)½¹ÍĞ¥‘±•½Ğ€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% ¥‘±•½Ğœ¤ì()±•Ğ¡…Ñ1¥Ù”€ô™…±Í”ì()™Õ¹Ñ¥½¸½Á•¹¡…Ğ ¤ì(€¥˜€¡¡…Ñ1¥Ù”¤É•ÑÕÉ¸ì(€¡…Ñ1¥Ù”€ôÑÉÕ”ì(€¥‘±•½Ğ¹ÍÑå±”¹‘¥ÍÁ±…ä€ô€¹½¹”œì(€µÍÍ°¹ÍÑå±”¹‘¥ÍÁ±…ä€€ô€™±•àœì(€¥¹ÁÕÑ°¹±…ÍÍ1¥ÍĞ¹…‘ …Ñ¥Ù”œ¤ì)ô()™Õ¹Ñ¥½¸…‘‘5Íœ¡¡Ñµ°°İ¡¼°ÅÉÌ€ômt¤ì(€½Á•¹¡…Ğ ¤ì(€½¹ÍĞˆ€ô‘½Õµ•¹Ğ¹É•…Ñ•±•µ•¹Ğ ‘¥Øœ¤ì(€ˆ¹±…ÍÍ9…µ”€ô‰Õ‰‰±”€‘íİ¡½õ€ì(€ˆ¹¥¹¹•É!Q50€ô¡Ñµ°ì(€¥˜€¡ÅÉÌ¹±•¹Ñ ¤ì(€€€½¹ÍĞİÉ…À€ô‘½Õµ•¹Ğ¹É•…Ñ•±•µ•¹Ğ ‘¥Øœ¤ì(€€€İÉ…À¹±…ÍÍ9…µ”€ô€ÅÕ¥¬µÉ•Á±¥•Ìœì(€€€ÅÉÌ¹™½É… ¡Ä€ôøì(€€€€€½¹ÍĞ‰Ñ¸€ô‘½Õµ•¹Ğ¹É•…Ñ•±•µ•¹Ğ ‰ÕÑÑ½¸œ¤ì(€€€€€‰Ñ¸¹±…ÍÍ9…µ”€ô€ÅÈµ‰Ñ¸œì(€€€€€‰Ñ¸¹Ñ•áÑ½¹Ñ•¹Ğ€ôÄ¹±…‰•°ì(€€€€€‰Ñ¸¹½¹±¥¬€ô€ ¤€ôø¡…¹‘±•5Íœ¡Ä¹Ù…°ñğÄ¹±…‰•°¤ì(€€€€€İÉ…À¹…ÁÁ•¹‘¡¥±¡‰Ñ¸¤ì(€€€ô¤ì(€€€ˆ¹…ÁÁ•¹‘¡¥±¡İÉ…À¤ì(€ô(€µÍÍ°¹…ÁÁ•¹‘¡¥±¡ˆ¤ì(€µÍÍ°¹ÍÉ½±±Q½À€ôµÍÍ°¹ÍÉ½±±!•¥¡Ğì)ô()½¹ÍĞ‘•±…ä€ôµÌ€ôø¹•ÜAÉ½µ¥Í”¡È€ôøÍ•ÑQ¥µ•½ÕĞ¡È°µÌ¤¤ì()…Íå¹Œ™Õ¹Ñ¥½¸‰½ÑM…ä¡¡Ñµ°°ÅÉÌ€ômt°€ô€ÌàÀ¤ì(€…İ…¥Ğ‘•±…ä¡¤ì(€…‘‘5Íœ¡¡Ñµ°°€‰½Ğœ°ÅÉÌ¤ì)ô()™Õ¹Ñ¥½¸‘•Ñ•Ñ1…¹œ¡Ğ¤ì(€É•ÑÕÉ¸€½qˆ¡é—oñ¡•©ñÍ¥•µ…ñ½ñ©…­ñéåñ©•ÍÑñ™¥Éµ…ñ¡eñµ½Ÿeñ­½¹Ñ…­ÑñÕÏ	Õñ¥±•ñ•¹…ñµ…¥•ñÉ½‰¥¥•ñé…©µÕ©•¥”¥qˆ½¤¹Ñ•ÍĞ¡Ğ¤€ü€Á°œ€è€•¸œì)ô()™Õ¹Ñ¥½¸•ÑI•Á±ä¡´°±…¹œ¤ì(€½¹ÍĞÁ°€ô±…¹œ€ôôô€Á°œì(€½¹ÍĞ±¼€ô´¹Ñ½1½İ•É…Í” ¤ì((€¥˜€ ½qˆ¡¡•±±½ñ¡¥ñ¡•åñ½½‘qÌ¡µ½É¹¥¹ñ…™Ñ•É¹½½¹ñ•Ù•¹¥¹œ¤¥qˆ¼¹Ñ•ÍĞ¡±¼¤(€€ñğ€½qˆ¡é—oñ¡•©ñÍ¥•µ…ñ‘é¥—‘½‰Éåñİ¥Ñ…¨¥qˆ¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞè!•¨„5§	¼§dÑÔİ¥‘é¥—¸éå´µ½ŸdÁ½·ÍŒüœ°(€€€€€€€€€Äémí±…‰•°è¼É½‰¥¥”üœ±Ù…°èİ¡…Ğ‘¼å½Ô‘¼ô±í±…‰•°èUÏ	Õ¤œ±Ù…°èÍ•ÉÙ¥•Ìô±í±…‰•°è-½¹Ñ…­Ğœ±Ù…°è½¹Ñ…Ğõtô(€€€€€€èìĞè‰!•ä„½½Ñ¼¡…Ù”å½Ô¡•É”¸]¡…Ğ…¸$¡•±Àå½Ôİ¥Ñ üˆ°(€€€€€€€€€Äémí±…‰•°è]¡…Ğ‘¼å½Ô‘¼üœ±Ù…°èİ¡…Ğ‘¼å½Ô‘¼ô±í±…‰•°èM•ÉÙ¥•Ìœ±Ù…°èÍ•ÉÙ¥•Ìô±í±…‰•°è½¹Ñ…Ğœ±Ù…°è½¹Ñ…Ğõtôì((€¥˜€ ½İ¡…Ğ¸¨¡‘½ñ‘½•Íñå½Õñ½µÁ…¹åñÍ½™ÕÑÕÉ”¥ñİ¡¼…É”å½ÕñÑ•±°µ”…‰½ÕÑñ•áÁ±…¥¸¼¹Ñ•ÍĞ¡±¼¤(€€ñğ€½¼€¡É½‰¥¥•ñÉ½‰¥ñÑ¼©•ÍĞ¥ñéå´Í§dé…©µÕ©•¥•ñ¼éå´¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞèM½ÕÑÕÉ”‰Õ‘Õ©”…•¹ÓÍÜ$¤…ÕÑ½µ…Ñåé…©”ƒŠPé…ÁÉ½©•­Ñ½İ…¹”­½¹­É•Ñ¹¥”Á½Qİ½«™¥É·d¸9¥”µ„ÑÔ½Ñ½İå Íé…‰±½»ÍÜ¸9…©Á¥•ÉÜÉ½éÕµ¥•µäQßÍ¨‰¥é¹•Ì°ÍéÕ­…µä¼Á¿ñ•É„é…Ì¤Á¥•¹§‘é”°Á½Ñ•´ÁÉ½Á½¹Õ©•µäÉ½éİ§é…¹¥„­ÓÍÉ”¹…ÁÉ…İ“dÁ…ÍÕ«¸œ°(€€€€€€€€€Äémí±…‰•°è)…­¥”ÕÏ	Õ¤üœ±Ù…°èÍ•ÉÙ¥•Ìô±í±…‰•°è)…¬Ñ¼‘é¥‡	„üœ±Ù…°è¡½Ü‘½•Ì¥Ğİ½É¬ô±í±…‰•°èM­½¹Ñ…­ÑÕ¨Í§dœ±Ù…°è½¹Ñ…Ğõtô(€€€€€€èìĞè‰M½ÕÑÕÉ”‰Õ¥±‘Ì$…•¹ÑÌ…¹…ÕÑ½µ…Ñ¥½¹ÌƒŠP‘•Í¥¹•ÍÁ•¥™¥…±±ä…É½Õ¹å½ÕÈ‰ÕÍ¥¹•ÍÌ¸9¼Ñ•µÁ±…Ñ•Ì°¹¼½¹”µÍ¥é”µ™¥ÑÌµ…±°¸]”™¥ÉÍĞÕ¹‘•ÉÍÑ…¹å½ÕÈÍ•ÑÕÀ°™¥¹İ¡…ĞÌ‘É…¥¹¥¹œÑ¥µ”…¹µ½¹•ä°Ñ¡•¸‰Õ¥±Í½±ÕÑ¥½¹ÌÑ¡…Ğ…ÑÕ…±±ä™¥Ğ¸ˆ°(€€€€€€€€€Äémí±…‰•°è]¡…ĞÍ•ÉÙ¥•Ìüœ±Ù…°èÍ•ÉÙ¥•Ìô±í±…‰•°è!½Ü¥Ğİ½É­Ìœ±Ù…°è¡½Ü‘½•Ì¥Ğİ½É¬ô±í±…‰•°è•Ğ¥¸Ñ½Õ œ±Ù…°è½¹Ñ…Ğõtôì((€¥˜€ ½Í•ÉÙ¥•ñ½™™•Éñ‰Õ¥±‘ñÉ•…Ñ•ñ…•¹Ññ…ÕÑ½µ…Ğ¼¹Ñ•ÍĞ¡±¼¤(€€ñğ€½ÕÏ	Õñ½™•ÉÑñ‰Õ‘Õ©•¥•ñÑİ½Ééå¥•ñ…•¹Ññ…ÕÑ½µ…Ğ¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞè	Õ‘Õ©•µäİÍéåÍÑ­¼ƒŠP½ß	…Í¹å ÍÁ•©…±¥ÍÓÍÜ$Á¼…ÕÑ½µ…Ñåé…©”•±¥µ¥¹Õ«”Á½İÑ…Éé…±¹”é…‘…¹¥„¸AÉé•İ§ÍÑÉ½»dÜ“Ïƒñ•‰äé½‰…éçÁ—	»±¥ÍÓd¸œ°(€€€€€€€€€Äémí±…‰•°è•¹¤$œ±Ù…°è…¤…•¹ÑÌô±í±…‰•°èÕÑ½µ…Ñåé…©”œ±Ù…°è…ÕÑ½µ…Ñ¥½¸ô±í±…‰•°è%±”Ñ¼­½ÍéÑÕ©”üœ±Ù…°èÁÉ¥¥¹œõtô(€€€€€€èìĞè‰]”‰Õ¥±•Ù•ÉåÑ¡¥¹œƒŠP™É½´ÕÍÑ½´$ÍÁ•¥…±¥ÍÑÌÑ¼…ÕÑ½µ…Ñ¥½¹ÌÑ¡…Ğİ¥Á”½ÕĞÉ•Á•Ñ¥Ñ¥Ù”İ½É¬¸MÉ½±°‘½İ¸Ñ¼Í•”Ñ¡”™Õ±°±¥ÍĞ¸ˆ°(€€€€€€€€€Äémí±…‰•°è$•¹ÑÌœ±Ù…°è…¤…•¹ÑÌô±í±…‰•°èÕÑ½µ…Ñ¥½¸œ±Ù…°è…ÕÑ½µ…Ñ¥½¸ô±í±…‰•°èAÉ¥¥¹œœ±Ù…°èÁÉ¥¥¹œõtôì((€¥˜€ ½…¤…•¹ÑñÍÁ•¥…±¥ÍĞ…•¹ÑñÕÍÑ½´…•¹Ññ±½…°±±µñ±½…°…¤¼¹Ñ•ÍĞ¡±¼¤(€€ñğ€½…•¹Ğ…¥ñÍÁ•©…±¥ÍÑ„…¥ñ±½­…±¹ä¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞèQİ½Ééåµä…•¹ÓÍÜ$‘é¥‡	…«å ±½­…±¹¥”¹„Qİ½¥´Í•Éİ•Éé”ƒŠPß	…Í¹äÁÉ…İ¹¥¬I=<°…ÍåÍÑ•¹ĞÍÁÉé•‘‡áä°½‰Ï	Õ„­±¥•¹Ñ„¸i…İÍé”‘½ÍÓeÁ¹¤°İåÑÉ•¹½İ…¹¤¹„Qİ½¥ ‘…¹å ¸œ°(€€€€€€€€€Äémí±…‰•°è)…¬é…·Íİ§üœ±Ù…°è¡½ÜÑ¼ÍÑ…ÉĞô±í±…‰•°è-½¹Ñ…­Ğœ±Ù…°è½¹Ñ…Ğõtô(€€€€€€èìĞè‰]”‰Õ¥±$…•¹ÑÌÑ¡…ĞÉÕ¸±½…±±ä½¸å½ÕÈÍ•ÉÙ•ÈƒŠPAHÍÁ•¥…±¥ÍĞ°Í…±•Ì…ÍÍ¥ÍÑ…¹Ğ°ÕÍÑ½µ•ÈÍÕÁÁ½ÉĞ…•¹Ğ¸±İ…åÌ½¸°ÑÉ…¥¹•½¸å½ÕÈ‘…Ñ„°¹•Ù•ÈÍ¡…É¥¹œ¥Ğ¸ˆ°(€€€€€€€€€Äémí±…‰•°è!½ÜÑ¼•ĞÍÑ…ÉÑ•üœ±Ù…°è¡½ÜÑ¼ÍÑ…ÉĞô±í±…‰•°è½¹Ñ…ĞÕÌœ±Ù…°è½¹Ñ…Ğõtôì((€¥˜€ ½y…ÕÑ½µ…Ñ¥½¸¼¹Ñ•ÍĞ¡±¼¤ñğ€½y…ÕÑ½µ…Ñåé…©”¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞèÕÑ½µ…ÑåéÕ©•µäé…ËÍİ¹¼è$©…¬¤‰•èƒŠP½ÁÉ½ÍÑå Á¿é—µ§e‘éä¹…Éëe‘é¥…µ¤Á¼ë	¿ñ½¹”İ¥•±½•Ñ…Á½İ”ÁÉ½•Íä¸AÉ…Õ©•µä¹„5…­”¤¸á¸¸œ°(€€€€€€€€€Äémí±…‰•°è)…¬é…·Íİ§üœ±Ù…°è¡½ÜÑ¼ÍÑ…ÉĞõtô(€€€€€€èìĞè‰]”…ÕÑ½µ…Ñ”İ¥Ñ …¹İ¥Ñ¡½ÕĞ$ƒŠP™É½´Í¥µÁ±”Ñ½½°½¹¹•Ñ¥½¹ÌÑ¼½µÁ±•àµÕ±Ñ¤µÍÑ•Àİ½É­™±½İÌ¸]”İ½É¬İ¥Ñ 5…­”…¹¸á¸¸ˆ°(€€€€€€€€€Äémí±…‰•°è!½ÜÑ¼•ĞÍÑ…ÉÑ•üœ±Ù…°è¡½ÜÑ¼ÍÑ…ÉĞõtôì((€¥˜€ ½ÁÉ¥•ñÁÉ¥¥¹ñ½ÍÑñ¡½ÜµÕ¡ñ™••ñÁ…ä¼¹Ñ•ÍĞ¡±¼¤(€€ñğ€½•¹…ñ­½ÍéÑñ¥±•ñ•¹¹¥­ñÃ	…Ñ¹¿o¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞè9¥”µ…µä½Ñ½İ•¼•¹¹¥­„ƒŠPİÍéåÍÑ­¼İå•¹¥…µä¥¹‘åİ¥‘Õ…±¹¥”Á¼Ñå´©…¬Á½é¹…µäQßÍ¨Í•ÑÕÀ¸9…©±•Á¥•¨Á½…‘…©µä¸œ°(€€€€€€€€€Äémí±…‰•°èM­½¹Ñ…­ÑÕ¨Í§dœ±Ù…°è½¹Ñ…Ğõtô(€€€€€€èìĞè‰9¼™¥á•ÁÉ¥¥¹œƒŠP•Ù•ÉåÑ¡¥¹œ¥ÌÍ½Á•¥¹‘¥Ù¥‘Õ…±±ä…™Ñ•Èİ”Õ¹‘•ÉÍÑ…¹å½ÕÈÍ•ÑÕÀ¸	•ÍĞÑ¼©ÕÍĞÑ…±¬¸ˆ°(€€€€€€€€€Äémí±…‰•°è•Ğ¥¸Ñ½Õ œ±Ù…°è½¹Ñ…Ğõtôì((€¥˜€ ½¡½Ü¸¨¡İ½É­ñÁÉ½•ÍÍñÍÑ…ÉÑñ‰•¥¹ñ…ÁÁÉ½… ¥ñİ¡…Ğ¸¨¡ÁÉ½•ÍÍñ¡…ÁÁ•¸¤¼¹Ñ•ÍĞ¡±¼¤(€€ñğ€½©…¬Ñ¼‘é¥‡	…ñ©…¬é…ëñÁÉ½•ÍñÁ½‘•«m¥”¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞèi…éå¹…µä½İåİ¥…‘Ôİ•İ»ÑÉèQİ½©•¨™¥ÉµäƒŠPÍéÕ­…µäÁ¿ñ•É…éäé…ÍÔ¤ÁÉ½•ÏÍÜ­ÓÍÉ”µ¿ñ¹„é½ÁÑåµ…±¥é½İ‡¸A½Ñ•´ÁÉ½Á½¹Õ©•µä­½¹­É•Ñ¹”É½éİ§é…¹¥„Á½QßÍ¨Í•ÑÕÀ¸œ°(€€€€€€€€€Äémí±…‰•°è	Ééµ¤‘½‰Éé”ƒŠP­½¹Ñ…­Ğœ±Ù…°è½¹Ñ…Ğõtô(€€€€€€èìĞè‰]”ÍÑ…ÉĞ‰ä…Õ‘¥Ñ¥¹œå½ÕÈ‰ÕÍ¥¹•ÍÌƒŠP™¥¹‘¥¹œÑ¥µ”‘É…¥¹Ì…¹ÁÉ½•ÍÍ•Ìİ½ÉÑ ™¥á¥¹œ¸Q¡•¸İ”ÁÉ½Á½Í”Í½±ÕÑ¥½¹Ì‰Õ¥±Ğ™½Èå½ÕÈ•á…ĞÍ•ÑÕÀ¸ˆ°(€€€€€€€€€Äémí±…‰•°è‰M½Õ¹‘Ì½½°±•ĞÌÑ…±¬ˆ±Ù…°è½¹Ñ…Ğõtôì((€¥˜€ ½½¹Ñ…ÑñÉ•…¡ñ•µ…¥±ñİ¡…ÑÍ…ÁÁñÑ•±•É…µñÑ…±­ñµ••Ññ…±°¼¹Ñ•ÍĞ¡±¼¤(€€ñğ€½­½¹Ñ…­Ññ•µ…¥±ñ¹…Á¥Íéñé…‘éİ¿ñÑ•±•É…µñİ¡…ÑÍ…ÁÁñÍÁ½Ñ­…¹¥”¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞè)…Í¹”¸)…¬İ½±¥ÍèÍ§dè¹…µ¤Í­½¹Ñ…­Ñ½İ‡üœ°(€€€€€€€€€Äémí±…‰•°èŸŠr$µ…¥°œ±Ù…°è•µ…¥°ô±í±…‰•°èŸÂ~J°]¡…ÑÍÁÀœ±Ù…°èİ¡…ÑÍ…ÁÀô±í±…‰•°èŸŠr Q•±•É…´œ±Ù…°èÑ•±•É…´õtô(€€€€€€èìĞèMÕÉ”¸!½Üİ½Õ±å½Ô±¥­”Ñ¼É•… ÕÌüœ°(€€€€€€€€€Äémí±…‰•°èŸŠr$µ…¥°œ±Ù…°è•µ…¥°ô±í±…‰•°èŸÂ~J°]¡…ÑÍÁÀœ±Ù…°èİ¡…ÑÍ…ÁÀô±í±…‰•°èŸŠr Q•±•É…´œ±Ù…°èÑ•±•É…´õtôì((€¥˜€ ½y•µ…¥°¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸ìĞèœñ„¡É•˜ô‰µ…¥±Ñ¼é•¹•É…±Í½™ÕÑÕÉ”¹…¤ˆÍÑå±”ô‰½±½ÈéÙ…È ´µ‰±Õ”¤ˆù•¹•É…±Í½™ÕÑÕÉ”¹…¤ğ½„øƒŠPİ”ÕÍÕ…±±äÉ•Á±äİ¥Ñ¡¥¸„™•Ü¡½ÕÉÌ¸œôì((€¥˜€ ½yİ¡…ÑÍ…ÁÀ¼¹Ñ•ÍĞ¡±¼¤ñğ€½yÑ•±•É…´¼¹Ñ•ÍĞ¡±¼¤¤ì(€€€½¹ÍĞ…ÁÀ€ô±¼¹¡…ÉĞ À¤¹Ñ½UÁÁ•É…Í” ¤€¬±¼¹Í±¥” Ä¤ì(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞé€‘í…ÁÁô‹e‘é¥”‘½ÍÓeÁ¹äİ­ËÍÑ”¸9„É…é¥”è€ñ„¡É•˜ô‰µ…¥±Ñ¼é•¹•É…±Í½™ÕÑÕÉ”¹…¤ˆÍÑå±”ô‰½±½ÈéÙ…È ´µ‰±Õ”¤ˆù•¹•É…±Í½™ÕÑÕÉ”¹…¤ğ½„ù€ô(€€€€€€èìĞé€‘í…ÁÁô½µ¥¹œÍ½½¸¸½È¹½Üè€ñ„¡É•˜ô‰µ…¥±Ñ¼é•¹•É…±Í½™ÕÑÕÉ”¹…¤ˆÍÑå±”ô‰½±½ÈéÙ…È ´µ‰±Õ”¤ˆù•¹•É…±Í½™ÕÑÕÉ”¹…¤ğ½„ù€ôì(€ô((€¥˜€ ½¡½ÜÑ¼ÍÑ…ÉÑñ•ĞÍÑ…ÉÑ•‘ñ‰•¥¹ñÍÑ…ÉĞİ½É­¥¹œ¼¹Ñ•ÍĞ¡±¼¤(€€ñğ€½©…¬é…·Íİ§ñ©…¬é…ëñ¡dİÍÃÏ	ÁÉ…½İ‡¼¹Ñ•ÍĞ¡±¼¤¤(€€€É•ÑÕÉ¸Á°(€€€€€€üìĞè9…©ÁÉ¿m¥•¨ƒŠP¹…Á¥Íè‘¼¹…Ì¤Á½İ¥•‘èÜÍ­ËÍ¥”éå´é…©µÕ©”Í§dQİ½©„™¥Éµ„¸I•ÍéÓÍ§dé…©µ¥•µä¸œ°(€€€€€€€€€Äémí±…‰•°èŸŠr$µ…¥°œ±Ù…°è•µ…¥°õtô(€€€€€€èìĞè‰…Í¥•ÍĞİ…äƒŠP©ÕÍĞÉ•… ½ÕĞ…¹Ñ•±°ÕÌ‰É¥•™±äİ¡…Ğå½ÕÈ½µÁ…¹ä‘½•Ì¸]”±°Ñ…­”¥Ğ™É½´Ñ¡•É”¸ˆ°(€€€€€€€€€Äémí±…‰•°èŸŠr$µ…¥°œ±Ù…°è•µ…¥°õtôì((€É•ÑÕÉ¸Á°(€€€€üìĞè!µ´°µ½Ÿd¤Á½İ¥•‘é¥—İ§e•¨¼¹…Íéå ÕÏ	Õ… °©…¬‘é¥‡	…µä°…±‰¼Á½·ÍŒ¤Í§dè¹…µ¤Í­½¹Ñ…­Ñ½İ‡¸œ°(€€€€€€€Äémí±…‰•°èUÏ	Õ¤œ±Ù…°èÍ•ÉÙ¥•Ìô±í±…‰•°è)…¬‘é¥‡	…¥”üœ±Ù…°è¡½Ü‘½•Ì¥Ğİ½É¬ô±í±…‰•°è-½¹Ñ…­Ğœ±Ù…°è½¹Ñ…Ğõtô(€€€€èìĞè‰9½ĞÍÕÉ”$…Õ¡ĞÑ¡…ĞƒŠP¡…ÁÁäÑ¼¡•±ÀÑ¡½Õ ¸]…¹ĞÑ¼­¹½Üİ¡…Ğİ”‘¼°¡½Üİ”İ½É¬°½È©ÕÍĞ•Ğ¥¸Ñ½Õ üˆ°(€€€€€€€Äémí±…‰•°è]¡…Ğå½Ô‘¼œ±Ù…°èİ¡…Ğ‘¼å½Ô‘¼ô±í±…‰•°è!½Ü¥Ğİ½É­Ìœ±Ù…°è¡½Ü‘½•Ì¥Ğİ½É¬ô±í±…‰•°è½¹Ñ…Ğœ±Ù…°è½¹Ñ…Ğõtôì)ô()…Íå¹Œ™Õ¹Ñ¥½¸¡…¹‘±•5Íœ¡Ñ•áĞ¤ì(€½¹ÍĞĞ€ôÑ•áĞ¹ÑÉ¥´ ¤ì(€¥˜€ …Ğ¤É•ÑÕÉ¸ì(€…‘‘5Íœ¡Ğ°€ÕÍ•Èœ¤ì(€¥¹ÁÕÑ°¹Ù…±Õ”€ô€œœì(€½¹ÍĞ±…¹œ€ô‘•Ñ•Ñ1…¹œ¡Ğ¤ì(€½¹ÍĞÉ•À€€ô•ÑI•Á±ä¡Ğ°±…¹œ¤ì(€…İ…¥Ğ‰½ÑM…ä¡É•À¹Ğ°É•À¹Äñğmt¤ì)ô()Í•¹‘°¹…‘‘Ù•¹Ñ1¥ÍÑ•¹•È ±¥¬œ°€ ¤€ôø¡…¹‘±•5Íœ¡¥¹ÁÕÑ°¹Ù…±Õ”¤¤ì)¥¹ÁÕÑ°¹…‘‘Ù•¹Ñ1¥ÍÑ•¹•È ­•å‘½İ¸œ°”€ôøì¥˜€¡”¹­•ä€ôôô€¹Ñ•Èœ¤¡…¹‘±•5Íœ¡¥¹ÁÕÑ°¹Ù…±Õ”¤ìô¤ì)¥¹ÁÕÑ°¹…‘‘Ù•¹Ñ1¥ÍÑ•¹•È ™½ÕÌœ°€ ¤€ôø¥¹ÁÕÑ°¹±…ÍÍ1¥ÍĞ¹…‘ …Ñ¥Ù”œ¤¤ì)É¥¹°¹…‘‘Ù•¹Ñ1¥ÍÑ•¹•È ±¥¬œ°€ ¤€ôø¥¹ÁÕÑ°¹™½ÕÌ ¤¤ì(ğ½ÍÉ¥ÁĞø(ğ½‰½‘äø(ğ½¡Ñµ°ø(
